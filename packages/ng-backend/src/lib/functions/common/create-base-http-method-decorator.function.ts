@@ -3,7 +3,7 @@ import { HttpMethod } from '../../declarations/enums/http-method.enum';
 import { CreateBaseHttpMethodDecorator } from '../../declarations/types/create-base-http-method-decorator.type';
 import { MethodGuard } from '../../declarations/types/method-guard.type';
 import { MethodHandler } from '../../declarations/types/method-handler.type';
-import { concatUriParts } from './concat-uri.function';
+import { concatUriRegExpParts } from './concat-uri-reg-exp-parts.function';
 
 const SLASH: string = `/`;
 
@@ -22,7 +22,7 @@ export const createBaseHttpMethodDecorator: CreateBaseHttpMethodDecorator = (
       baseUriPart: string,
       inputUriPart: string
     ) => {
-      const fullUrl: string = concatUriParts(
+      const fullUrl: string = concatUriRegExpParts(
         baseUriPart,
         getProcessedRouteUrl(routeUri)
       );
