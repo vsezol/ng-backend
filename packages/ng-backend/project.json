@@ -1,0 +1,41 @@
+{
+  "name": "ng-backend",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/ng-backend/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/ng-backend",
+        "main": "packages/ng-backend/src/index.ts",
+        "tsConfig": "packages/ng-backend/tsconfig.lib.json",
+        "assets": ["packages/ng-backend/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/ng-backend/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "packages/ng-backend/jest.config.ts",
+        "passWithNoTests": true
+      }
+    },
+    "barrel": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "./packages/ng-backend",
+        "command": "barrelsby --config ./barrelsby.json --directory ./src/lib"
+      }
+    }
+  },
+  "tags": []
+}

@@ -1,0 +1,18 @@
+<input type="number" [formControl]="todoIdControl" />
+
+<h1>Current</h1>
+<div *ngIf="todo$ | async as todo">
+  id: {{ todo.id }} <br />
+  title: {{ todo.title }} <br />
+  userId: {{ todo.userId }} <br />
+</div>
+
+<br />
+
+<h1>List</h1>
+
+<div *ngFor="let todo of todos$ | async">
+  id: {{ todo.id }} <br />
+  title: {{ todo.title }} <br />
+  userId: {{ todo.userId }} <br />
+</div>
