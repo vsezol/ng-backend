@@ -35,6 +35,13 @@
         "cwd": "./packages/ng-backend",
         "command": "barrelsby --config ./barrelsby.json --directory ./src/lib"
       }
+    },
+    "typedoc": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "./packages/ng-backend",
+        "command": "typedoc"
+      }
     }
   },
   "tags": []
