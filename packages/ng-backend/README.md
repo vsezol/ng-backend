@@ -1,11 +1,3 @@
 # ng-backend
 
-This library was generated with [Nx](https://nx.dev).
-
-## Building
-
-Run `nx build ng-backend` to build the library.
-
-## Running unit tests
-
-Run `nx test ng-backend` to execute the unit tests via [Jest](https://jestjs.io).
+The library helps to write beautiful angular interceptors with decorators like controllers on backend.

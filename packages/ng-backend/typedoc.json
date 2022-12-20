@@ -1,0 +1,10 @@
+{
+  "entryPoints": ["src/index.ts"],
+  "readme": "README.md",
+  "name": "NgBackend",
+  "tsconfig": "tsconfig.lib.json",
+  "excludePrivate": true,
+  "excludeExternals": true,
+  "hideGenerator": true,
+  "out": "docs"
+}
