@@ -1,4 +1,7 @@
+import { isNil } from './is-nil.function';
+
 export const hasProperty = <T extends object, K extends string>(
-  input: T,
+  input: T | undefined | null,
   property: K
-): input is T & Record<K, unknown> => input.hasOwnProperty(property);
+): input is T & Record<K, unknown> =>
+  isNil(input) ? false : input.hasOwnProperty(property);
