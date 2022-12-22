@@ -1,1 +1,1 @@
-export type MethodGuard = (baseUrl: string, inputUrl: string) => boolean;
+export type MethodGuard = (baseRegExpPart: string, inputUrl: string) => boolean;
