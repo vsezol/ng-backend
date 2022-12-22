@@ -1,5 +1,5 @@
 import { RequestHandlersBuilder } from '../../declarations/classes/request-handlers-builder.class';
-import { isClassConstructor } from '../common/is-class-constructor.function';
+import { isClassConstructor } from '../type-guards/is-class-constructor.function';
 
 export const DisabledController: ClassDecorator = <T extends Function>(
   classConstructorReference: T

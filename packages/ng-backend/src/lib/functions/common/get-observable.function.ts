@@ -1,5 +1,5 @@
 import { from, isObservable, Observable, of } from 'rxjs';
-import { isPromise } from './is-promise.function';
+import { isPromise } from '../type-guards/is-promise.function';
 
 export const getObservable = <T>(
   data: Observable<T> | Promise<T> | T
