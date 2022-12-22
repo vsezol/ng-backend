@@ -1,17 +1,17 @@
 import { REG_EXP_PART_BY_URL_PARAM } from '../../declarations/constants/reg-exp-part-by-url-param.const';
-import { RegExpPart } from '../../declarations/enums/regexp-part.enum';
 import { UrlParam } from '../../declarations/enums/url-param.enum';
 import { UriRegExpBuilder } from '../../declarations/types/uri-reg-exp-builder.type';
+import { concatUriRegExpParts } from './concat-uri-reg-exp-parts.function';
 import { isEnumValue } from './is-enum-value.function';
 
-export const createUriRegExpBuilder = () => {
+export function createUriRegExpPartBuilder() {
   const target: UriRegExpBuilder = <UriRegExpBuilder>(() => {});
 
   let parts: string[] = [];
 
   return new Proxy(target, {
     apply: () => {
-      const uri: string = parts.join(RegExpPart.Slash);
+      const uri: string = concatUriRegExpParts(...parts);
 
       parts = [];
 
@@ -27,7 +27,7 @@ export const createUriRegExpBuilder = () => {
       return receiver;
     },
   });
-};
+}
 
 function getPart(key: string): string {
   if (!isEnumValue(UrlParam, key)) {

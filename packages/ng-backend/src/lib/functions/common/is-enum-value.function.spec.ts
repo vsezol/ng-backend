@@ -1,6 +1,6 @@
 import { isEnumValue } from './is-enum-value.function';
 
-describe('isEnumValue', () => {
+describe('is-enum-value.function', () => {
   enum Color {
     Red = 'red',
     Green = 'green',

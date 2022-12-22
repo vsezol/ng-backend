@@ -2,7 +2,7 @@ import { HttpEventType } from '@angular/common/http';
 import { isEnumValue } from './is-enum-value.function';
 import { isHttpEvent } from './is-http-event.function';
 
-describe('isHttpEvent', () => {
+describe('is-http-event.function', () => {
   it(`should return true if input has 'type' property with value from HttpEventType`, () => {
     const httpEvents: { type: HttpEventType }[] = Object.values(HttpEventType)
       .filter((type: unknown): type is HttpEventType =>

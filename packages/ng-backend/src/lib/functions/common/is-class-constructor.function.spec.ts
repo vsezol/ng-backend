@@ -1,6 +1,6 @@
 import { isClassConstructor } from './is-class-constructor.function';
 
-describe('isClassConstructor', () => {
+describe('is-class-constructor.function', () => {
   it('should return true if input is a class constructor', () => {
     class User {
       constructor(public name: string) {}

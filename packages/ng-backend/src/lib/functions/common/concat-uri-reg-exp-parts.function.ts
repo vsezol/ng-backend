@@ -1,4 +1,4 @@
-import { RegExpPart } from '../../api';
+import { RegExpPart } from '../../declarations/enums/regexp-part.enum';
 
 type Part = string | undefined | null;
 
