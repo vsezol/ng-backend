@@ -1,11 +1,8 @@
-interface StringEnum {
-  [value: string]: string;
-}
-interface NumericEnum {
-  [value: number]: string;
+interface Enum {
+  [value: string | number]: string | number;
 }
 
-export function isEnumValue<T extends StringEnum | NumericEnum>(
+export function isEnumValue<T extends Enum>(
   enumSrc: T,
   key: unknown
 ): key is T[keyof T] {
