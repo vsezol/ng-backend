@@ -10,8 +10,8 @@ import { RequestHandlersBuilder } from '../../declarations/classes/request-handl
 import { MethodHandlerBasicResult } from '../../declarations/types/method-handler-basic-result.type';
 import { MethodHandler } from '../../declarations/types/method-handler.type';
 import { getObservable } from '../common/get-observable.function';
-import { isClassConstructor } from '../common/is-class-constructor.function';
-import { isHttpEvent } from '../common/is-http-event.function';
+import { isClassConstructor } from '../type-guards/is-class-constructor.function';
+import { isHttpEvent } from '../type-guards/is-http-event.function';
 
 export function Controller(baseUrl: string): ClassDecorator {
   const decorator: ClassDecorator = <T extends Function>(

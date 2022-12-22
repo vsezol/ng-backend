@@ -2,9 +2,9 @@ import { REG_EXP_PART_BY_URL_PARAM } from '../../declarations/constants/reg-exp-
 import { RegExpPart } from '../../declarations/enums/regexp-part.enum';
 import { UrlParam } from '../../declarations/enums/url-param.enum';
 import { UriRegExpBuilder } from '../../declarations/types/uri-reg-exp-builder.type';
+import { isNil } from '../type-guards/is-nil.function';
 import { concatUriRegExpParts } from './concat-uri-reg-exp-parts.function';
 import { createUriRegExpPartBuilder } from './create-uri-reg-exp-part-builder.function';
-import { isNil } from './is-nil.function';
 
 describe('create-uri-reg-exp-part-builder.function', () => {
   let builder: UriRegExpBuilder;

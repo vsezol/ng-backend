@@ -1,6 +1,6 @@
 import { HttpEvent, HttpEventType } from '@angular/common/http';
-import { hasProperty } from './has-property.function';
-import { isEnumValue } from './is-enum-value.function';
+import { hasProperty } from '../type-guards/has-property.function';
+import { isEnumValue } from '../type-guards/is-enum-value.function';
 
 export const isHttpEvent = (input: unknown): input is HttpEvent<unknown> =>
   typeof input === 'object' &&

@@ -1,6 +1,6 @@
 import { isObservable, of } from 'rxjs';
+import { isPromise } from '../type-guards/is-promise.function';
 import { getObservable } from './get-observable.function';
-import { isPromise } from './is-promise.function';
 
 describe('get-observable.function', () => {
   it('should return an observable when given an observable', () => {

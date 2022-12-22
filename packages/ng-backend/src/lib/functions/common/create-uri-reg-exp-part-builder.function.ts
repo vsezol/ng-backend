@@ -1,8 +1,8 @@
 import { REG_EXP_PART_BY_URL_PARAM } from '../../declarations/constants/reg-exp-part-by-url-param.const';
 import { UrlParam } from '../../declarations/enums/url-param.enum';
 import { UriRegExpBuilder } from '../../declarations/types/uri-reg-exp-builder.type';
+import { isEnumValue } from '../type-guards/is-enum-value.function';
 import { concatUriRegExpParts } from './concat-uri-reg-exp-parts.function';
-import { isEnumValue } from './is-enum-value.function';
 
 export function createUriRegExpPartBuilder() {
   const target: UriRegExpBuilder = <UriRegExpBuilder>(() => {});
