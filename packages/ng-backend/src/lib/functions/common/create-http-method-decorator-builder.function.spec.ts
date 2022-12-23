@@ -18,7 +18,7 @@ describe('create-http-method-decorator-builder.function', () => {
 
     const result: MethodDecorator = builder();
 
-    expect(typeof result === 'function').toBe(true);
+    expect(typeof result).toBe('function');
   });
 
   it('should return object that works like UriRegExpBuilder and returns function', () => {
@@ -27,7 +27,7 @@ describe('create-http-method-decorator-builder.function', () => {
 
     const result: MethodDecorator = builder.hello._float_._any_._uuid_();
 
-    expect(typeof result === 'function').toBe(true);
+    expect(typeof result).toBe('function');
   });
 
   describe('HttpMethod call', () => {
