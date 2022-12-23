@@ -9,6 +9,7 @@ export default {
       stringifyContentPathRegex: '\\.(html|svg)$',
     },
   },
+  clearMocks: true,
   transform: {
     '^.+\\.(ts|mjs|js|html)$': 'jest-preset-angular',
   },

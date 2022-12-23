@@ -1,11 +1,10 @@
 import { RequestHandlersBuilder } from '../../declarations/classes/request-handlers-builder.class';
-import { HttpMethod } from '../../declarations/enums/http-method.enum';
-import { CreateBaseHttpMethodDecorator } from '../../declarations/types/create-base-http-method-decorator.type';
+import { HttpMethodName } from '../../declarations/enums/http-method-name.enum';
 import { MethodHandler } from '../../declarations/types/method-handler.type';
-import { createMethodGuard } from './create-method-guard.function';
+import { createMethodGuard } from '../common/create-method-guard.function';
 
-export const createBaseHttpMethodDecorator: CreateBaseHttpMethodDecorator = (
-  method: HttpMethod,
+export const HttpMethod = (
+  method: HttpMethodName,
   routeRegExpPart: string = ''
 ) => {
   const resultDecorator: MethodDecorator = (
