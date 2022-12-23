@@ -1,7 +1,6 @@
-import { HttpMethod } from '../../declarations/enums/http-method.enum';
-import { HttpMethodDecorator } from '../../declarations/types/http-method-decorator.type';
-import { createHttpMethodDecorator } from '../common/create-http-method-decorator.function';
+import { HttpMethodName } from '../../declarations/enums/http-method-name.enum';
+import { HttpMethodDecoratorBuilder } from '../../declarations/types/http-method-decorator-builder.type';
+import { createHttpMethodDecoratorBuilder } from '../common/create-http-method-decorator-builder.function';
 
-export const Delete: HttpMethodDecorator = createHttpMethodDecorator(
-  HttpMethod.DELETE
-);
+export const Delete: HttpMethodDecoratorBuilder =
+  createHttpMethodDecoratorBuilder(HttpMethodName.DELETE);

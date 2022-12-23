@@ -1,6 +1,6 @@
 import { HttpRequest } from '@angular/common/http';
-import { isEnumValue } from '../../functions/common/is-enum-value.function';
-import { HttpMethod } from '../enums/http-method.enum';
+import { isEnumValue } from '../../functions/type-guards/is-enum-value.function';
+import { HttpMethodName } from '../enums/http-method-name.enum';
 import { MethodHandlerConfig } from '../interfaces/method-handler-config.interface';
 import { MethodHandler } from '../types/method-handler.type';
 
@@ -10,7 +10,7 @@ export class RequestHandlers {
   public disabled: boolean = false;
 
   private readonly handlerConfigByMethod: Map<
-    HttpMethod,
+    HttpMethodName,
     MethodHandlerConfig[]
   > = new Map();
 
@@ -46,16 +46,17 @@ export class RequestHandlers {
   }
 
   private getHandlersConfigsByMethod(
-    method: HttpMethod
+    method: HttpMethodName
   ): MethodHandlerConfig[] {
     return this.handlerConfigByMethod.get(method) ?? [];
   }
 
   private isRegisteredHttpMethod(
-    method: HttpMethod | string
-  ): method is HttpMethod {
+    method: HttpMethodName | string
+  ): method is HttpMethodName {
     return (
-      isEnumValue(HttpMethod, method) && this.handlerConfigByMethod.has(method)
+      isEnumValue(HttpMethodName, method) &&
+      this.handlerConfigByMethod.has(method)
     );
   }
 }

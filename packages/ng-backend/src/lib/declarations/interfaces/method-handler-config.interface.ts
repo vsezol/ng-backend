@@ -1,10 +1,10 @@
-import { HttpMethod } from '../enums/http-method.enum';
+import { HttpMethodName } from '../enums/http-method-name.enum';
 import { MethodGuard } from '../types/method-guard.type';
 import { MethodHandler } from '../types/method-handler.type';
 
 export interface MethodHandlerConfig {
   key: string | symbol;
-  forMethod: HttpMethod;
+  forMethod: HttpMethodName;
   canActivate: MethodGuard;
   run: MethodHandler;
 }
