@@ -1,9 +1,9 @@
-import { ResponseBody } from '../../functions/decorators/auto-response-body.decorator';
+import { AutoResponseBody } from '../../functions/decorators/auto-response-body.decorator';
 import { AutoResponseFull } from '../../functions/decorators/auto-response-full.decorator';
 
 interface AutoResponseStructure {
   <T>(...params: Parameters<typeof AutoResponseFull<T>>): MethodDecorator;
-  body: typeof ResponseBody;
+  body: typeof AutoResponseBody;
 }
 
 const target: AutoResponseStructure = <AutoResponseStructure>(() => {});
@@ -18,7 +18,7 @@ export const AutoResponse: AutoResponseStructure =
     get(_: unknown, key: keyof AutoResponseStructure) {
       switch (key) {
         case 'body':
-          return ResponseBody;
+          return AutoResponseBody;
         default:
           throw new Error(
             `[AutoResponse] there is no decorator with name 'AutoResponse.${key}'`
