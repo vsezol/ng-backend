@@ -1,7 +1,7 @@
 import { HttpRequest } from '@angular/common/http';
 import { PatchRequest } from './patch-request.decorator';
 
-type Input = (url: string) => string | string;
+type Input = ((url: string) => string) | string;
 
 export function Redirect(input: Input): MethodDecorator {
   const getChangedUrl = (url: string) =>
