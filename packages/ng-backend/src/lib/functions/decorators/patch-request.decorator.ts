@@ -1,11 +1,10 @@
 import { HttpRequest } from '@angular/common/http';
 import { MethodHandlerBasicResult } from '../../declarations/types/method-handler-basic-result.type';
 import { MethodHandler } from '../../declarations/types/method-handler.type';
-
-type Patcher<T, U = T> = (request: HttpRequest<T>) => HttpRequest<U>;
+import { RequestPatcher } from '../../declarations/types/request-patcher.type';
 
 export function PatchRequest<T, U = T>(
-  patcher: Patcher<T, U>
+  patcher: RequestPatcher<T, U>
 ): MethodDecorator {
   const decorator: MethodDecorator = (
     _: object,
