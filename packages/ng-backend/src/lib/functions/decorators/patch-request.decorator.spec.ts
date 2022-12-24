@@ -93,4 +93,28 @@ describe('patch-request.decorator', () => {
       );
     }
   });
+
+  it('can be used multiple times', () => {
+    const uriParts = ['FIRST', 'SECOND'];
+    class Fake {
+      @PatchRequest((request) =>
+        request.clone({ url: request.url + uriParts[1] })
+      )
+      @PatchRequest((request) =>
+        request.clone({ url: request.url + uriParts[0] })
+      )
+      public fakeFn() {}
+    }
+
+    const fakeExemplar: Fake = new Fake();
+    const result: unknown = fakeExemplar.fakeFn.bind(
+      fakeExemplar,
+      beginHttpRequest
+    )();
+
+    expect(result).toBeInstanceOf(HttpRequest);
+    if (result instanceof HttpRequest) {
+      expect(result.url).toBe(beginUrl + uriParts.join(''));
+    }
+  });
 });
