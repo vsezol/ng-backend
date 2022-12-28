@@ -10,10 +10,9 @@ import { MethodHandler } from '../../declarations/types/method-handler.type';
 import { runMethodHandlers } from '../common/run-method-handlers.function';
 import { isClassConstructor } from '../type-guards/is-class-constructor.function';
 
-export function Controller(baseUrl: string): ClassDecorator {
-  const decorator: ClassDecorator = <T extends Function>(
-    classConstructorReference: T
-  ): T => {
+export const Controller =
+  (baseUrl: string): ClassDecorator =>
+  <T extends Function>(classConstructorReference: T): T => {
     if (!isClassConstructor(classConstructorReference)) {
       throw new Error(`Unexpected decoration target is detected.`);
     }
@@ -50,6 +49,3 @@ export function Controller(baseUrl: string): ClassDecorator {
       }
     };
   };
-
-  return decorator;
-}
