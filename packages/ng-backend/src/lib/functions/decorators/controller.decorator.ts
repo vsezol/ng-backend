@@ -3,15 +3,12 @@ import {
   HttpHandler,
   HttpInterceptor,
   HttpRequest,
-  HttpResponse,
 } from '@angular/common/http';
-import { Observable, of, switchMap } from 'rxjs';
+import { Observable } from 'rxjs';
 import { RequestHandlersBuilder } from '../../declarations/classes/request-handlers-builder.class';
-import { MethodHandlerBasicResult } from '../../declarations/types/method-handler-basic-result.type';
 import { MethodHandler } from '../../declarations/types/method-handler.type';
-import { getObservable } from '../common/get-observable.function';
+import { runMethodHandlers } from '../common/run-method-handlers.function';
 import { isClassConstructor } from '../type-guards/is-class-constructor.function';
-import { isHttpEvent } from '../type-guards/is-http-event.function';
 
 export function Controller(baseUrl: string): ClassDecorator {
   const decorator: ClassDecorator = <T extends Function>(
@@ -45,7 +42,7 @@ export function Controller(baseUrl: string): ClassDecorator {
           return stub();
         }
 
-        return runHandlers(request, next, handlers);
+        return runMethodHandlers(request, next, handlers);
       }
 
       private isRegisteredUrl(url: string): boolean {
@@ -55,34 +52,4 @@ export function Controller(baseUrl: string): ClassDecorator {
   };
 
   return decorator;
-}
-
-function runHandlers(
-  request: HttpRequest<unknown>,
-  next: HttpHandler,
-  [handler, ...otherHandlers]: MethodHandler[]
-): Observable<HttpEvent<unknown>> {
-  const runHandlersChainForResult = (result: HttpRequest<unknown>) => {
-    return otherHandlers.length === 0
-      ? next.handle(result)
-      : runHandlers(result, next, otherHandlers);
-  };
-
-  return getObservable(handler(request)).pipe(
-    switchMap((result: MethodHandlerBasicResult) => {
-      if (typeof result === 'undefined') {
-        return runHandlersChainForResult(request);
-      }
-
-      if (result instanceof HttpRequest) {
-        return runHandlersChainForResult(result);
-      }
-
-      if (isHttpEvent(result)) {
-        return of(result);
-      }
-
-      return of(new HttpResponse<unknown>({ body: result }));
-    })
-  );
 }
