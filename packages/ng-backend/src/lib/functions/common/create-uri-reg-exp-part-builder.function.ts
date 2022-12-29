@@ -1,38 +1,57 @@
-import { REG_EXP_PART_BY_URL_PARAM } from '../../declarations/constants/reg-exp-part-by-url-param.const';
-import { UrlParam } from '../../declarations/enums/url-param.enum';
+import { REG_EXP_PART_BY_URL_PARAM_TYPE } from '../../declarations/constants/reg-exp-part-by-url-param-type.const';
 import { UriRegExpBuilder } from '../../declarations/types/uri-reg-exp-builder.type';
-import { isEnumValue } from '../type-guards/is-enum-value.function';
+import { UrlParamType } from '../../declarations/types/url-param-type.type';
 import { concatUriRegExpParts } from './concat-uri-reg-exp-parts.function';
 
-export function createUriRegExpPartBuilder() {
+export function createUriRegExpPartBuilder(): UriRegExpBuilder {
   const target: UriRegExpBuilder = <UriRegExpBuilder>(() => {});
 
-  let parts: string[] = [];
+  const uriParts: UriRegExpParts = new UriRegExpParts();
 
-  return new Proxy(target, {
-    apply: () => {
-      const uri: string = concatUriRegExpParts(...parts);
-
-      parts = [];
-
-      return uri;
-    },
-    get: (
-      _: UriRegExpBuilder,
-      key: keyof UriRegExpBuilder,
-      receiver: UriRegExpBuilder
+  return new Proxy<UriRegExpBuilder>(target, {
+    apply: (
+      _: unknown,
+      thisArg: unknown,
+      [urlParamType]: [UrlParamType] | []
     ) => {
-      parts.push(getPart(key));
+      if (urlParamType === undefined) {
+        return concatUriRegExpParts(...uriParts.getParts());
+      }
+
+      uriParts.pop();
+      uriParts.addParamPart(urlParamType);
+
+      return thisArg;
+    },
+
+    get: (_: unknown, key: string, receiver: UriRegExpBuilder) => {
+      uriParts.addPart(key);
 
       return receiver;
     },
   });
 }
 
-function getPart(key: string): string {
-  if (!isEnumValue(UrlParam, key)) {
-    return key;
+class UriRegExpParts {
+  private readonly parts: string[] = [];
+
+  public getParts(): string[] {
+    return this.parts;
   }
 
-  return REG_EXP_PART_BY_URL_PARAM.get(key) ?? key;
+  public addPart(part: string): void {
+    this.parts.push(part);
+  }
+
+  public pop(): void {
+    this.parts.pop();
+  }
+
+  public addParamPart(type: UrlParamType): void {
+    this.parts.push(this.getRegExpPartByUrlParamType(type));
+  }
+
+  private getRegExpPartByUrlParamType(paramType: UrlParamType): string {
+    return REG_EXP_PART_BY_URL_PARAM_TYPE.get(paramType) ?? paramType;
+  }
 }
