@@ -5,7 +5,7 @@ import { createMethodGuard } from '../common/create-method-guard.function';
 
 export const HttpMethod = (
   method: HttpMethodName,
-  routeRegExpPart: string = ''
+  routeRegExpPart: string | RegExp = ''
 ) => {
   const resultDecorator: MethodDecorator = (
     hostObject: object,
@@ -17,7 +17,7 @@ export const HttpMethod = (
     RequestHandlersBuilder.getRequestHandlers(hostObject).registerHandler({
       forMethod: method,
       key,
-      canActivate: createMethodGuard(routeRegExpPart),
+      canActivate: createMethodGuard(routeRegExpPart.toString()),
       run: handler,
     });
 

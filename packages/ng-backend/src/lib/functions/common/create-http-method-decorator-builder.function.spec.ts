@@ -25,7 +25,10 @@ describe('create-http-method-decorator-builder.function', () => {
     const builder: HttpMethodDecoratorBuilder =
       createHttpMethodDecoratorBuilder(HttpMethodName.POST);
 
-    const result: MethodDecorator = builder.hello._float_._any_._uuid_();
+    const result: MethodDecorator = builder.hello
+      .param1('float')
+      .param2('any')
+      .param3('uuid')();
 
     expect(typeof result).toBe('function');
   });
@@ -45,12 +48,14 @@ describe('create-http-method-decorator-builder.function', () => {
       const builder: HttpMethodDecoratorBuilder =
         createHttpMethodDecoratorBuilder(HttpMethodName.GET);
 
-      builder.hello.my.brothers.i.want.to.ask.you.about.my.phone.number._int_();
+      builder.hello.my.brothers
+        .id('float')
+        .want.to.ask.you.about.my.phone.number('int')();
 
       expect(mockHttpMethod).toHaveBeenCalledTimes(1);
       expect(mockHttpMethod).toHaveBeenCalledWith(
         HttpMethodName.GET,
-        `hello/my/brothers/i/want/to/ask/you/about/my/phone/number/${RegExpPart.Int}`
+        `hello/my/brothers/${RegExpPart.Float}/want/to/ask/you/about/my/phone/${RegExpPart.Int}`
       );
     });
   });
