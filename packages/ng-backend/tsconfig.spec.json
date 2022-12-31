@@ -10,5 +10,5 @@
     "src/**/*.test.ts",
     "src/**/*.spec.ts",
     "src/**/*.d.ts"
-  ]
+, "src/lib/functions/common/create-uri-reg-exp-part-builder.function.spec.old.ts"  ]
 }

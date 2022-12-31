@@ -7,4 +7,6 @@ export interface MethodHandlerConfig {
   forMethod: HttpMethodName;
   canActivate: MethodGuard;
   run: MethodHandler;
+  routeRegExpPart: string;
+  paramNames: string[];
 }

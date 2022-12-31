@@ -1,9 +1,9 @@
 import { HttpMethodName } from '../../declarations/enums/http-method-name.enum';
 import { HttpMethodDecoratorBuilder } from '../../declarations/types/http-method-decorator-builder.type';
-import { UriRegExpBuilder } from '../../declarations/types/uri-reg-exp-builder.type';
+import { UriPartsListBuilder } from '../../declarations/types/uri-parts-list-builder.type';
 import { UrlParamType } from '../../declarations/types/url-param-type.type';
 import { HttpMethod } from '../decorators/http-method.decorator';
-import { createUriRegExpPartBuilder } from './create-uri-reg-exp-part-builder.function';
+import { createUriRegExpPartsBuilder } from './create-uri-parts-list-builder.function';
 
 const target: HttpMethodDecoratorBuilder = <HttpMethodDecoratorBuilder>(
   (() => {})
@@ -12,19 +12,20 @@ const target: HttpMethodDecoratorBuilder = <HttpMethodDecoratorBuilder>(
 export function createHttpMethodDecoratorBuilder(
   method: HttpMethodName
 ): HttpMethodDecoratorBuilder {
-  const uriRegExpBuilder: UriRegExpBuilder = createUriRegExpPartBuilder();
+  const uriPartsListBuilder: UriPartsListBuilder =
+    createUriRegExpPartsBuilder();
 
   return new Proxy<HttpMethodDecoratorBuilder>(target, {
     apply: (_: unknown, __: unknown, [uriPart]: [string] | []) =>
-      HttpMethod(method, uriPart ?? uriRegExpBuilder()),
+      HttpMethod(method, uriPart ?? uriPartsListBuilder()),
 
     get: (_: unknown, key: keyof HttpMethodDecoratorBuilder, receiver) =>
-      createProxyForKey(uriRegExpBuilder, receiver, key),
+      createProxyForKey(uriPartsListBuilder, receiver, key),
   });
 }
 
 function createProxyForKey(
-  uriRegExpBuilder: UriRegExpBuilder,
+  uriPartsListBuilder: UriPartsListBuilder,
   rootProxy: HttpMethodDecoratorBuilder,
   forKey: string
 ): HttpMethodDecoratorBuilder {
@@ -35,18 +36,18 @@ function createProxyForKey(
   return new Proxy<HttpMethodDecoratorBuilder>(target, {
     apply: (_: unknown, __: unknown, [urlParamType]: [UrlParamType] | []) => {
       if (urlParamType === undefined) {
-        uriRegExpBuilder[forKey];
+        uriPartsListBuilder[forKey];
 
         return rootProxy();
       }
 
-      uriRegExpBuilder[forKey](urlParamType);
+      uriPartsListBuilder[forKey](urlParamType);
 
       return rootProxy;
     },
 
     get: (_: unknown, key: string) => {
-      uriRegExpBuilder[forKey];
+      uriPartsListBuilder[forKey];
 
       return rootProxy[key];
     },
