@@ -21,6 +21,7 @@ jest.mock('../common/create-method-guard.function', () => ({
   createMethodGuard: mockCreateMethodGuard,
 }));
 
+import { DynamicUriPart, RegExpPart, UriPart } from '../../api';
 import { HttpMethodName } from '../../declarations/enums/http-method-name.enum';
 import { MethodHandlerConfig } from '../../declarations/interfaces/method-handler-config.interface';
 import { HttpMethod } from './http-method.decorator';
@@ -85,8 +86,40 @@ describe('http-method.decorator', () => {
       canActivate: mockMethodGuard,
       forMethod: httpMethodName,
       run: exemplar[methodKey],
+      routeRegExpPart: 'my/name/is/van',
+      paramNames: [],
     });
     expect(mockRequestHandlers.registerHandler).toHaveBeenCalledTimes(1);
     expect(passedOptions).toEqual(expectedOptions);
+  });
+
+  it('should work with regexp', () => {
+    class Fake {
+      @HttpMethod(HttpMethodName.GET, /url\/by\/regexp/)
+      public fakeFn() {}
+    }
+
+    const passedOptions: MethodHandlerConfig =
+      mockRequestHandlers.registerHandler.mock.lastCall[0];
+    expect(mockRequestHandlers.registerHandler).toHaveBeenCalledTimes(1);
+    expect(passedOptions.routeRegExpPart).toBe('url\\/by\\/regexp');
+  });
+
+  it('should work with UriPart array', () => {
+    class Fake {
+      @HttpMethod(HttpMethodName.GET, [
+        new UriPart('old'),
+        new UriPart('but/gold'),
+        new DynamicUriPart('phone', 'int'),
+      ])
+      public fakeFn() {}
+    }
+
+    const passedOptions: MethodHandlerConfig =
+      mockRequestHandlers.registerHandler.mock.lastCall[0];
+    expect(mockRequestHandlers.registerHandler).toHaveBeenCalledTimes(1);
+    expect(passedOptions.routeRegExpPart).toBe(
+      `old/but/gold/(${RegExpPart.Int})`
+    );
   });
 });

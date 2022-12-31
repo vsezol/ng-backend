@@ -38,6 +38,8 @@ describe('request-handlers.class', () => {
         key: 'fakeKey',
         canActivate: () => true,
         run: handler,
+        routeRegExpPart: '',
+        paramNames: [],
       });
 
       expect(
@@ -57,6 +59,8 @@ describe('request-handlers.class', () => {
         forMethod: HttpMethodName.GET,
         key: 'handler1',
         run: () => 1,
+        routeRegExpPart: '',
+        paramNames: [],
       };
 
       const secondHandlerConfig: MethodHandlerConfig = {
@@ -64,6 +68,8 @@ describe('request-handlers.class', () => {
         forMethod: HttpMethodName.GET,
         key: 'handler2',
         run: () => 2,
+        routeRegExpPart: '',
+        paramNames: [],
       };
 
       requestHandlers.registerHandler(firstHandlerConfig);
@@ -87,12 +93,16 @@ describe('request-handlers.class', () => {
         forMethod: HttpMethodName.GET,
         key: 'handler1',
         run: () => 1,
+        routeRegExpPart: '',
+        paramNames: [],
       };
       const secondHandlerConfig: MethodHandlerConfig = {
         canActivate: (base, url) => base === baseUrl && url === '/other',
         forMethod: HttpMethodName.GET,
         key: 'handler2',
         run: () => 2,
+        routeRegExpPart: '',
+        paramNames: [],
       };
 
       requestHandlers.registerHandler(firstHandlerConfig);
@@ -113,12 +123,16 @@ describe('request-handlers.class', () => {
         forMethod: HttpMethodName.DELETE,
         key: 'handler1',
         run: firstRun,
+        routeRegExpPart: '',
+        paramNames: [],
       });
       requestHandlers.registerHandler({
         canActivate: () => true,
         forMethod: HttpMethodName.DELETE,
         key: 'handler2',
         run: secondRun,
+        routeRegExpPart: '',
+        paramNames: [],
       });
 
       const handlers = requestHandlers.getHandlers(

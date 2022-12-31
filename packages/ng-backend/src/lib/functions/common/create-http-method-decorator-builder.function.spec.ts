@@ -6,8 +6,8 @@ jest.mock('../decorators/http-method.decorator', () => {
   };
 });
 
+import { DynamicUriPart, UriPart } from '../../api';
 import { HttpMethodName } from '../../declarations/enums/http-method-name.enum';
-import { RegExpPart } from '../../declarations/enums/regexp-part.enum';
 import { HttpMethodDecoratorBuilder } from '../../declarations/types/http-method-decorator-builder.type';
 import { createHttpMethodDecoratorBuilder } from './create-http-method-decorator-builder.function';
 
@@ -41,7 +41,7 @@ describe('create-http-method-decorator-builder.function', () => {
       builder();
 
       expect(mockHttpMethod).toHaveBeenCalledTimes(1);
-      expect(mockHttpMethod).toHaveBeenCalledWith(HttpMethodName.PATCH, '');
+      expect(mockHttpMethod).toHaveBeenCalledWith(HttpMethodName.PATCH, []);
     });
 
     it('should return callable that calls HttpMethod decorator after call with using UriRegExpBuilder', () => {
@@ -50,12 +50,26 @@ describe('create-http-method-decorator-builder.function', () => {
 
       builder.hello.my.brothers
         .id('float')
-        .want.to.ask.you.about.my.phone.number('int')();
+        .i.want.to.ask.you.about.my.phone.number('int')();
 
       expect(mockHttpMethod).toHaveBeenCalledTimes(1);
       expect(mockHttpMethod).toHaveBeenCalledWith(
         HttpMethodName.GET,
-        `hello/my/brothers/${RegExpPart.Float}/want/to/ask/you/about/my/phone/${RegExpPart.Int}`
+        expect.arrayContaining([
+          new UriPart('hello'),
+          new UriPart('my'),
+          new UriPart('brothers'),
+          new DynamicUriPart('id', 'float'),
+          new UriPart('i'),
+          new UriPart('want'),
+          new UriPart('to'),
+          new UriPart('ask'),
+          new UriPart('you'),
+          new UriPart('about'),
+          new UriPart('my'),
+          new UriPart('phone'),
+          new DynamicUriPart('number', 'int'),
+        ])
       );
     });
   });
