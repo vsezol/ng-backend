@@ -10,7 +10,7 @@ import {
 
 @Controller('todos')
 export class TodosController {
-  @Get._int_()
+  @Get.number('int')()
   @AutoResponse.body({
     userId: 777777,
     id: 777777,
