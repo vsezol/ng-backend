@@ -1,15 +1,15 @@
 const mockRequestHandlersBaseUrlSetter = jest.fn();
-const mockRequestHandlersGetHandlers = jest.fn();
+const mockRequestHandlersGetHandler = jest.fn();
 
 const mockHttpHandler: HttpHandler = {
   handle: jest.fn(),
 };
 
 const mockRequestHandlers = {
-  getHandlers: mockRequestHandlersGetHandlers,
+  getHandler: mockRequestHandlersGetHandler,
 };
 
-const mockRunMethodHandlers = jest.fn();
+const mockRunMethodHandler = jest.fn();
 
 Object.defineProperty(mockRequestHandlers, 'baseUrl', {
   set: mockRequestHandlersBaseUrlSetter,
@@ -27,8 +27,8 @@ jest.mock('../../declarations/classes/request-handlers.class', () => ({
   RequestHandlers: mockRequestHandlers,
 }));
 
-jest.mock('../../functions/common/run-method-handlers.function', () => ({
-  runMethodHandlers: mockRunMethodHandlers,
+jest.mock('../../functions/common/run-method-handler.function', () => ({
+  runMethodHandler: mockRunMethodHandler,
 }));
 
 import {
@@ -65,7 +65,7 @@ describe('controller.decorator', () => {
 
   it('should call HttpHandler.handle if the request URL is not registered', () => {
     const request = new HttpRequest('GET', '/other/api/items');
-    mockRequestHandlersGetHandlers.mockReturnValue(() => new HttpResponse());
+    mockRequestHandlersGetHandler.mockReturnValue(() => new HttpResponse());
 
     @Controller(baseUrl)
     class Test {}
@@ -80,7 +80,7 @@ describe('controller.decorator', () => {
 
   it('should call HttpHandler.handle if the there are not registered handlers', () => {
     const request = new HttpRequest('GET', baseUrl);
-    mockRequestHandlersGetHandlers.mockReturnValue([]);
+    mockRequestHandlersGetHandler.mockReturnValue(undefined);
 
     @Controller(baseUrl)
     class Test {}
@@ -93,17 +93,14 @@ describe('controller.decorator', () => {
     expect(mockHttpHandler.handle).toHaveBeenCalledWith(request);
   });
 
-  it('should return runMethodHandlers call output if there are registered handlers', (done) => {
+  it('should return runMethodHandler call output if there is at least one registered handler', (done) => {
     const request = new HttpRequest('GET', `${baseUrl}/hello`);
     const expectedInterceptResult = new HttpResponse({
       body: 'HELLO FROM TEST',
     });
-    mockRunMethodHandlers.mockReturnValue(of(expectedInterceptResult));
-    const handlers: MethodHandler[] = [
-      (request: HttpRequest<unknown>) => request,
-      () => new HttpResponse(),
-    ];
-    mockRequestHandlersGetHandlers.mockReturnValue(handlers);
+    mockRunMethodHandler.mockReturnValue(of(expectedInterceptResult));
+    const handler: MethodHandler = () => new HttpResponse();
+    mockRequestHandlersGetHandler.mockReturnValue(handler);
 
     @Controller(baseUrl)
     class Test {}
@@ -116,10 +113,10 @@ describe('controller.decorator', () => {
       mockHttpHandler
     );
 
-    expect(mockRunMethodHandlers).toHaveBeenCalledWith(
+    expect(mockRunMethodHandler).toHaveBeenCalledWith(
       request,
       mockHttpHandler,
-      handlers
+      handler
     );
     expect(mockHttpHandler.handle).not.toHaveBeenCalled();
     result$.subscribe((value) => {

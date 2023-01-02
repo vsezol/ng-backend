@@ -7,7 +7,7 @@ import {
 import { Observable } from 'rxjs';
 import { RequestHandlersBuilder } from '../../declarations/classes/request-handlers-builder.class';
 import { MethodHandler } from '../../declarations/types/method-handler.type';
-import { runMethodHandlers } from '../common/run-method-handlers.function';
+import { runMethodHandler } from '../common/run-method-handler.function';
 import { isClassConstructor } from '../type-guards/is-class-constructor.function';
 
 export const Controller =
@@ -34,14 +34,14 @@ export const Controller =
           return stub();
         }
 
-        const handlers: MethodHandler[] =
-          RequestHandlersBuilder.getRequestHandlers(this).getHandlers(request);
+        const handler: MethodHandler | undefined =
+          RequestHandlersBuilder.getRequestHandlers(this).getHandler(request);
 
-        if (handlers.length === 0) {
+        if (handler === undefined) {
           return stub();
         }
 
-        return runMethodHandlers(request, next, handlers);
+        return runMethodHandler(request, next, handler);
       }
 
       private isRegisteredUrl(url: string): boolean {

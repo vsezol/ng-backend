@@ -6,26 +6,26 @@ import {
 } from '@angular/common/http';
 import { of, switchMap } from 'rxjs';
 import { Observable } from 'rxjs/internal/Observable';
+import { VOID } from '../../declarations/constants/void.const';
 import { MethodHandlerBasicResult } from '../../declarations/types/method-handler-basic-result.type';
 import { MethodHandler } from '../../declarations/types/method-handler.type';
 import { isHttpEvent } from '../type-guards/is-http-event.function';
 import { getObservable } from './get-observable.function';
 
-export function runMethodHandlers(
+export function runMethodHandler(
   request: HttpRequest<unknown>,
   next: HttpHandler,
-  [handler, ...otherHandlers]: MethodHandler[]
+  handler: MethodHandler
 ): Observable<HttpEvent<unknown>> {
-  const runChain = runAsChain.bind(null, next, otherHandlers);
-
-  return getObservable(handler(request)).pipe(
+  return of(VOID).pipe(
+    switchMap(() => getObservable(handler(request))),
     switchMap((result: MethodHandlerBasicResult) => {
       if (typeof result === 'undefined') {
-        return runChain(request);
+        return next.handle(request);
       }
 
       if (result instanceof HttpRequest) {
-        return runChain(result);
+        return next.handle(result);
       }
 
       if (isHttpEvent(result)) {
@@ -35,14 +35,4 @@ export function runMethodHandlers(
       return of(new HttpResponse<unknown>({ body: result }));
     })
   );
-}
-
-function runAsChain(
-  next: HttpHandler,
-  handlers: MethodHandler[],
-  request: HttpRequest<unknown>
-) {
-  return handlers.length === 0
-    ? next.handle(request)
-    : runMethodHandlers(request, next, handlers);
 }

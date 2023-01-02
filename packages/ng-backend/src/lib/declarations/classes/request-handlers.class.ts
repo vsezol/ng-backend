@@ -20,12 +20,12 @@ export class RequestHandlers {
     this.disabledHandlersKeys.add(key);
   }
 
-  public getHandlers(request: HttpRequest<unknown>): MethodHandler[] {
+  public getHandler(request: HttpRequest<unknown>): MethodHandler | undefined {
     if (!this.isRegisteredHttpMethod(request.method) || this.disabled) {
-      return [];
+      return undefined;
     }
 
-    const handlers: MethodHandler[] = this.getHandlersConfigsByMethod(
+    const [handler]: MethodHandler[] = this.getHandlersConfigsByMethod(
       request.method
     )
       .filter(
@@ -35,7 +35,7 @@ export class RequestHandlers {
       )
       .map(({ run }: MethodHandlerConfig) => run);
 
-    return handlers;
+    return handler;
   }
 
   public registerHandler(config: MethodHandlerConfig): void {
