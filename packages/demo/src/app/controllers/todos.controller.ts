@@ -10,32 +10,21 @@ import {
 
 @Controller('todos')
 export class TodosController {
-  @Get.number('int')()
+  @Get.id('int')()
+  @Header('get1', 'get1')
+  @Header('get2', 'get2')
+  @Header('get3', 'get3')
+  @Header('get4', 'get4')
   @AutoResponse.body({
     userId: 777777,
     id: 777777,
     title: 'Я ИЗ JOOOOPA',
     completed: true,
   })
-  public getById(): void {
-    // return new HttpResponse<Todo>({
-    //   body: {
-    //     userId: 777777,
-    //     id: 777777,
-    //     title: request.url,
-    //     completed: true,
-    //   },
-    // });
-  }
+  public getById(): void {}
 
   @Get()
-  @Header('get1', 'get1')
-  @Header('get2', 'get2')
-  @Header('get3', 'get3')
-  @Header('get4', 'get4')
-  public get1(): void {}
-
-  @Get()
+  @Disabled.handler
   @AutoResponse.body([
     {
       userId: 777,
@@ -44,21 +33,6 @@ export class TodosController {
       completed: true,
     },
   ])
-  @Disabled.handler
-  public get2(): void {}
-
-  @Get()
-  @Disabled.handler
-  @AutoResponse({
-    body: [
-      {
-        userId: 777,
-        id: 777,
-        title: 'Я ИЗ @Response',
-        completed: true,
-      },
-    ],
-  })
   public get3(): void {}
 
   @Get()
