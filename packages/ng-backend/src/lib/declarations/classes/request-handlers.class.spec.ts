@@ -21,17 +21,17 @@ describe('request-handlers.class', () => {
     });
   });
 
-  describe('getHandlers', () => {
-    it('getHandlers returns empty array if request method is not registered', () => {
+  describe('getHandler', () => {
+    it('getHandler returns undefined if request method is not registered', () => {
       expect(
-        requestHandlers.getHandlers(new HttpRequest<unknown>('GET', 'fake'))
-      ).toEqual([]);
+        requestHandlers.getHandler(new HttpRequest<unknown>('GET', 'fake'))
+      ).toEqual(undefined);
       expect(
-        requestHandlers.getHandlers(new HttpRequest<unknown>('DELETE', 'fake'))
-      ).toEqual([]);
+        requestHandlers.getHandler(new HttpRequest<unknown>('DELETE', 'fake'))
+      ).toEqual(undefined);
     });
 
-    it('getHandlers returns empty array if request handlers disabled', () => {
+    it('returns undefined if request handlers disabled', () => {
       const handler: MethodHandler = () => {};
       requestHandlers.registerHandler({
         forMethod: HttpMethodName.GET,
@@ -43,17 +43,17 @@ describe('request-handlers.class', () => {
       });
 
       expect(
-        requestHandlers.getHandlers(new HttpRequest<unknown>('GET', 'fake'))
-      ).toEqual([handler]);
+        requestHandlers.getHandler(new HttpRequest<unknown>('GET', 'fake'))
+      ).toEqual(handler);
 
       requestHandlers.disabled = true;
 
       expect(
-        requestHandlers.getHandlers(new HttpRequest<unknown>('GET', 'fake'))
-      ).toEqual([]);
+        requestHandlers.getHandler(new HttpRequest<unknown>('GET', 'fake'))
+      ).toEqual(undefined);
     });
 
-    it('getHandlers filters out disabled handlers', () => {
+    it('filters out disabled handlers', () => {
       const firstHandlerConfig: MethodHandlerConfig = {
         canActivate: () => true,
         forMethod: HttpMethodName.GET,
@@ -77,13 +77,13 @@ describe('request-handlers.class', () => {
 
       requestHandlers.disableHandlerByKey(secondHandlerConfig.key);
 
-      const handlers = requestHandlers.getHandlers(
+      const handler = requestHandlers.getHandler(
         new HttpRequest<unknown>('GET', 'fake')
       );
-      expect(handlers).toEqual([firstHandlerConfig.run]);
+      expect(handler).toEqual(firstHandlerConfig.run);
     });
 
-    it('getHandlers filters out handlers based on canActivate', () => {
+    it('filters out handlers based on canActivate', () => {
       const baseUrl = 'http://example.com';
 
       requestHandlers.baseUrl = baseUrl;
@@ -107,14 +107,14 @@ describe('request-handlers.class', () => {
 
       requestHandlers.registerHandler(firstHandlerConfig);
       requestHandlers.registerHandler(secondHandlerConfig);
-      const handlers = requestHandlers.getHandlers(
+      const handler = requestHandlers.getHandler(
         new HttpRequest<unknown>('GET', '/test')
       );
 
-      expect(handlers).toEqual([firstHandlerConfig.run]);
+      expect(handler).toEqual(firstHandlerConfig.run);
     });
 
-    it('getHandlers returns the run function of each enabled handler', () => {
+    it('returns the run function of first registered handler', () => {
       const firstRun = () => {};
       const secondRun = () => {};
 
@@ -135,10 +135,10 @@ describe('request-handlers.class', () => {
         paramNames: [],
       });
 
-      const handlers = requestHandlers.getHandlers(
+      const handler = requestHandlers.getHandler(
         new HttpRequest('DELETE', 'fake')
       );
-      expect(handlers).toEqual([firstRun, secondRun]);
+      expect(handler).toEqual(firstRun);
     });
   });
 });
