@@ -4,7 +4,7 @@
     "src/**/*.ts",
     "src/app/declarations/types/method-handler-result.type.ts",
     "src/app/declarations/interfaces/todo.interface,ts"
-, "../ng-backend/src/lib/declarations/interfaces/method-handler-input.interface.ts"  ],
+  ],
   "compilerOptions": {
     "types": ["jest", "node"]
   }
