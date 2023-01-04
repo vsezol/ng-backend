@@ -41,4 +41,16 @@ describe('auto-response.proxy', () => {
     expect(mockAutoResponseBody).toHaveBeenCalledTimes(1);
     expect(passedBody).toEqual(body);
   });
+
+  it('should throw error on get not existing key', () => {
+    let thrown: unknown;
+    try {
+      // @ts-expect-error
+      AutoResponse.FAKE_KEY;
+    } catch (item: unknown) {
+      thrown = item;
+    }
+
+    expect(thrown).toBeInstanceOf(Error);
+  });
 });

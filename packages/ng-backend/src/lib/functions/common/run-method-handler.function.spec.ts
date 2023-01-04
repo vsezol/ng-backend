@@ -9,6 +9,7 @@ import {
   HttpRequest,
   HttpResponse,
 } from '@angular/common/http';
+import { MethodHandlerInput } from '../../declarations/classes/method-handler-input.class';
 import { runMethodHandler } from './run-method-handler.function';
 
 describe('runMethodHandler', () => {
@@ -19,14 +20,18 @@ describe('runMethodHandler', () => {
   });
 
   it('returns next.handle when handler returns undefined', () => {
-    runMethodHandler(baseRequest, mockHttpHandler, () => undefined).subscribe();
+    runMethodHandler(
+      new MethodHandlerInput({ request: baseRequest }),
+      mockHttpHandler,
+      () => undefined
+    ).subscribe();
 
     expect(mockHttpHandler.handle).toHaveBeenCalledWith(baseRequest);
   });
 
   it('returns next.handle when handler returns HttpRequest', () => {
     runMethodHandler(
-      baseRequest,
+      new MethodHandlerInput({ request: baseRequest }),
       mockHttpHandler,
       () => baseRequest
     ).subscribe();
@@ -42,7 +47,7 @@ describe('runMethodHandler', () => {
     };
 
     runMethodHandler(
-      baseRequest,
+      new MethodHandlerInput({ request: baseRequest }),
       mockHttpHandler,
       () => progressEvent
     ).subscribe((event) => {
@@ -58,7 +63,7 @@ describe('runMethodHandler', () => {
     };
 
     runMethodHandler(
-      baseRequest,
+      new MethodHandlerInput({ request: baseRequest }),
       mockHttpHandler,
       () => handlerResult
     ).subscribe((event) => {
@@ -72,7 +77,11 @@ describe('runMethodHandler', () => {
       throw new Error(errorMessage);
     };
 
-    runMethodHandler(baseRequest, mockHttpHandler, handler).subscribe({
+    runMethodHandler(
+      new MethodHandlerInput({ request: baseRequest }),
+      mockHttpHandler,
+      handler
+    ).subscribe({
       next: () => fail('should have thrown an error'),
       error: (error) => expect(error.message).toEqual(errorMessage),
     });
