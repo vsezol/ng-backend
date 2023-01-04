@@ -1,5 +1,5 @@
-import { HttpRequest } from '@angular/common/http';
-import { PatchRequest } from './patch-request.decorator';
+import { MethodHandlerInput } from '../../declarations/classes/method-handler-input.class';
+import { PatchInput } from './patch-input.decorator';
 
 /**
  * Decorator that sets request header
@@ -12,9 +12,11 @@ export function Header<T extends string>(
   name: T,
   value: string | string[]
 ): MethodDecorator {
-  return PatchRequest((request: HttpRequest<unknown>) =>
-    request.clone({
-      headers: request.headers.set(name, value),
+  return PatchInput((input: MethodHandlerInput<unknown>) =>
+    input.clone({
+      request: input.request.clone({
+        headers: input.request.headers.set(name, value),
+      }),
     })
   );
 }

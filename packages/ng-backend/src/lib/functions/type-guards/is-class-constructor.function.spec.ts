@@ -34,4 +34,12 @@ describe('is-class-constructor.function', () => {
       expect(isClassConstructor(input)).toBe(false);
     });
   });
+
+  it('should return false if input is arrow function', () => {
+    expect(isClassConstructor(() => {})).toBe(false);
+  });
+
+  it('should return true if input is anonymous class', () => {
+    expect(isClassConstructor(class {})).toBe(true);
+  });
 });

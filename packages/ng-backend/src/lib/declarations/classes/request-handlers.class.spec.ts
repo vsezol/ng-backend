@@ -1,7 +1,6 @@
 import { HttpRequest } from '@angular/common/http';
 import { HttpMethodName } from '../enums/http-method-name.enum';
 import { MethodHandlerConfig } from '../interfaces/method-handler-config.interface';
-import { MethodHandler } from '../types/method-handler.type';
 import { RequestHandlers } from './request-handlers.class';
 
 describe('request-handlers.class', () => {
@@ -21,35 +20,43 @@ describe('request-handlers.class', () => {
     });
   });
 
-  describe('getHandler', () => {
-    it('getHandler returns undefined if request method is not registered', () => {
+  describe('getHandlerConfig', () => {
+    it('returns undefined if request method is not registered', () => {
       expect(
-        requestHandlers.getHandler(new HttpRequest<unknown>('GET', 'fake'))
+        requestHandlers.getHandlerConfig(
+          new HttpRequest<unknown>('GET', 'fake')
+        )
       ).toEqual(undefined);
       expect(
-        requestHandlers.getHandler(new HttpRequest<unknown>('DELETE', 'fake'))
+        requestHandlers.getHandlerConfig(
+          new HttpRequest<unknown>('DELETE', 'fake')
+        )
       ).toEqual(undefined);
     });
 
     it('returns undefined if request handlers disabled', () => {
-      const handler: MethodHandler = () => {};
-      requestHandlers.registerHandler({
+      const config: MethodHandlerConfig = {
         forMethod: HttpMethodName.GET,
         key: 'fakeKey',
         canActivate: () => true,
-        run: handler,
+        run: () => {},
         routeRegExpPart: '',
         paramNames: [],
-      });
+      };
+      requestHandlers.registerHandler(config);
 
       expect(
-        requestHandlers.getHandler(new HttpRequest<unknown>('GET', 'fake'))
-      ).toEqual(handler);
+        requestHandlers.getHandlerConfig(
+          new HttpRequest<unknown>('GET', 'fake')
+        )
+      ).toEqual(config);
 
       requestHandlers.disabled = true;
 
       expect(
-        requestHandlers.getHandler(new HttpRequest<unknown>('GET', 'fake'))
+        requestHandlers.getHandlerConfig(
+          new HttpRequest<unknown>('GET', 'fake')
+        )
       ).toEqual(undefined);
     });
 
@@ -77,10 +84,10 @@ describe('request-handlers.class', () => {
 
       requestHandlers.disableHandlerByKey(secondHandlerConfig.key);
 
-      const handler = requestHandlers.getHandler(
+      const handlerConfig = requestHandlers.getHandlerConfig(
         new HttpRequest<unknown>('GET', 'fake')
       );
-      expect(handler).toEqual(firstHandlerConfig.run);
+      expect(handlerConfig).toEqual(firstHandlerConfig);
     });
 
     it('filters out handlers based on canActivate', () => {
@@ -107,38 +114,38 @@ describe('request-handlers.class', () => {
 
       requestHandlers.registerHandler(firstHandlerConfig);
       requestHandlers.registerHandler(secondHandlerConfig);
-      const handler = requestHandlers.getHandler(
+      const handlerConfig = requestHandlers.getHandlerConfig(
         new HttpRequest<unknown>('GET', '/test')
       );
 
-      expect(handler).toEqual(firstHandlerConfig.run);
+      expect(handlerConfig).toEqual(firstHandlerConfig);
     });
 
     it('returns the run function of first registered handler', () => {
-      const firstRun = () => {};
-      const secondRun = () => {};
-
-      requestHandlers.registerHandler({
+      const firstConfig: MethodHandlerConfig = {
         canActivate: () => true,
         forMethod: HttpMethodName.DELETE,
         key: 'handler1',
-        run: firstRun,
+        run: () => {},
         routeRegExpPart: '',
         paramNames: [],
-      });
-      requestHandlers.registerHandler({
+      };
+      const secondConfig: MethodHandlerConfig = {
         canActivate: () => true,
         forMethod: HttpMethodName.DELETE,
         key: 'handler2',
-        run: secondRun,
+        run: () => {},
         routeRegExpPart: '',
         paramNames: [],
-      });
+      };
 
-      const handler = requestHandlers.getHandler(
+      requestHandlers.registerHandler(firstConfig);
+      requestHandlers.registerHandler(secondConfig);
+
+      const handlerConfig = requestHandlers.getHandlerConfig(
         new HttpRequest('DELETE', 'fake')
       );
-      expect(handler).toEqual(firstRun);
+      expect(handlerConfig).toEqual(firstConfig);
     });
   });
 });
