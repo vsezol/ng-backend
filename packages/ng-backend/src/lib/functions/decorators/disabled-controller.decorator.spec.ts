@@ -53,4 +53,8 @@ describe('disabled-controller.decorator', () => {
     expect(mockRequestHandlersDisabledSetter).toHaveBeenCalledWith(true);
     expect(mockRequestHandlersDisabledSetter).toHaveBeenCalledTimes(3);
   });
+
+  it('should throw error if decoration target is not class constructor', () => {
+    expect(() => DisabledController(() => {})).toThrowError();
+  });
 });

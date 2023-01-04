@@ -1,12 +1,12 @@
 const mockRequestHandlersBaseUrlSetter = jest.fn();
-const mockRequestHandlersGetHandler = jest.fn();
+const mockRequestHandlersGetHandlerConfig = jest.fn();
 
 const mockHttpHandler: HttpHandler = {
   handle: jest.fn(),
 };
 
 const mockRequestHandlers = {
-  getHandler: mockRequestHandlersGetHandler,
+  getHandlerConfig: mockRequestHandlersGetHandlerConfig,
 };
 
 const mockRunMethodHandler = jest.fn();
@@ -39,12 +39,22 @@ import {
   HttpResponse,
 } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { MethodHandler } from '../../declarations/types/method-handler.type';
+import { HttpMethodName, MethodHandlerConfig } from '../../api';
+import { MethodHandlerInput } from '../../declarations/classes/method-handler-input.class';
 import { hasProperty } from '../type-guards/has-property.function';
 import { Controller } from './controller.decorator';
 
 describe('controller.decorator', () => {
   const baseUrl = '/api/fake';
+
+  const baseHandlerConfig: MethodHandlerConfig = {
+    key: 'fakeKey',
+    forMethod: HttpMethodName.GET,
+    canActivate: () => true,
+    run: () => new HttpResponse(),
+    routeRegExpPart: '',
+    paramNames: [],
+  };
 
   it('should return a class decorator that creates a new class that extends the original class and implements HttpInterceptor', () => {
     @Controller(baseUrl)
@@ -65,7 +75,7 @@ describe('controller.decorator', () => {
 
   it('should call HttpHandler.handle if the request URL is not registered', () => {
     const request = new HttpRequest('GET', '/other/api/items');
-    mockRequestHandlersGetHandler.mockReturnValue(() => new HttpResponse());
+    mockRequestHandlersGetHandlerConfig.mockReturnValue(baseHandlerConfig);
 
     @Controller(baseUrl)
     class Test {}
@@ -80,7 +90,7 @@ describe('controller.decorator', () => {
 
   it('should call HttpHandler.handle if the there are not registered handlers', () => {
     const request = new HttpRequest('GET', baseUrl);
-    mockRequestHandlersGetHandler.mockReturnValue(undefined);
+    mockRequestHandlersGetHandlerConfig.mockReturnValue(undefined);
 
     @Controller(baseUrl)
     class Test {}
@@ -99,8 +109,8 @@ describe('controller.decorator', () => {
       body: 'HELLO FROM TEST',
     });
     mockRunMethodHandler.mockReturnValue(of(expectedInterceptResult));
-    const handler: MethodHandler = () => new HttpResponse();
-    mockRequestHandlersGetHandler.mockReturnValue(handler);
+
+    mockRequestHandlersGetHandlerConfig.mockReturnValue(baseHandlerConfig);
 
     @Controller(baseUrl)
     class Test {}
@@ -114,15 +124,55 @@ describe('controller.decorator', () => {
     );
 
     expect(mockRunMethodHandler).toHaveBeenCalledWith(
-      request,
+      new MethodHandlerInput({ request }),
       mockHttpHandler,
-      handler
+      baseHandlerConfig.run
     );
     expect(mockHttpHandler.handle).not.toHaveBeenCalled();
     result$.subscribe((value) => {
       expect(value).toEqual(expectedInterceptResult);
       done();
     });
+  });
+
+  it('should pass dynamic params map', () => {
+    const request = new HttpRequest(
+      'GET',
+      `${baseUrl}/111/middle-part/222/333`
+    );
+
+    const handlerConfig: MethodHandlerConfig = {
+      ...baseHandlerConfig,
+      routeRegExpPart: `${baseUrl}/(.*)/middle-part/(.*)/(.*)`,
+      paramNames: ['hello', 'world', 'bro'],
+    };
+
+    mockRequestHandlersGetHandlerConfig.mockReturnValue(handlerConfig);
+
+    @Controller(baseUrl)
+    class Test {}
+    const testInstance = new Test();
+    if (!isHttpInterceptor(testInstance)) {
+      throw new Error();
+    }
+    testInstance.intercept(request, mockHttpHandler);
+
+    expect(mockRunMethodHandler).toHaveBeenCalledWith(
+      new MethodHandlerInput({
+        request,
+        dynamicParamsMap: new Map([
+          ['hello', '111'],
+          ['world', '222'],
+          ['bro', '333'],
+        ]),
+      }),
+      mockHttpHandler,
+      handlerConfig.run
+    );
+  });
+
+  it('should throw error if decoration target is not class constructor', () => {
+    expect(() => Controller('fake')(() => {})).toThrowError();
   });
 });
 

@@ -6,6 +6,7 @@ import {
 } from '@angular/common/http';
 import { of, switchMap } from 'rxjs';
 import { Observable } from 'rxjs/internal/Observable';
+import { MethodHandlerInput } from '../../declarations/classes/method-handler-input.class';
 import { VOID } from '../../declarations/constants/void.const';
 import { MethodHandlerBasicResult } from '../../declarations/types/method-handler-basic-result.type';
 import { MethodHandler } from '../../declarations/types/method-handler.type';
@@ -13,15 +14,15 @@ import { isHttpEvent } from '../type-guards/is-http-event.function';
 import { getObservable } from './get-observable.function';
 
 export function runMethodHandler(
-  request: HttpRequest<unknown>,
+  input: MethodHandlerInput,
   next: HttpHandler,
   handler: MethodHandler
 ): Observable<HttpEvent<unknown>> {
   return of(VOID).pipe(
-    switchMap(() => getObservable(handler(request))),
+    switchMap(() => getObservable(handler(input))),
     switchMap((result: MethodHandlerBasicResult) => {
       if (typeof result === 'undefined') {
-        return next.handle(request);
+        return next.handle(input.request);
       }
 
       if (result instanceof HttpRequest) {

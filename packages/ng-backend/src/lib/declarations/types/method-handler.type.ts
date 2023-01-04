@@ -1,6 +1,6 @@
-import { HttpRequest } from '@angular/common/http';
+import { MethodHandlerInput } from '../classes/method-handler-input.class';
 import { MethodHandlerResult } from './method-handler-result.type';
 
 export type MethodHandler<T = unknown> = (
-  request: HttpRequest<T>
+  input: MethodHandlerInput<T>
 ) => MethodHandlerResult;

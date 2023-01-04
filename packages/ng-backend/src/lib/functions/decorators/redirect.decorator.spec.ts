@@ -1,12 +1,13 @@
-const mockPatchRequest: jest.Mock<RequestPatcher<unknown>> = jest.fn();
+const mockPatchInput: jest.Mock<MethodHandlerInputPatcher<unknown>> = jest.fn();
 
-jest.mock('./patch-request.decorator', () => ({
-  PatchRequest: mockPatchRequest,
+jest.mock('./patch-input.decorator', () => ({
+  PatchInput: mockPatchInput,
 }));
 
 import { HttpRequest } from '@angular/common/http';
+import { MethodHandlerInput } from '../../declarations/classes/method-handler-input.class';
 import { HttpMethodName } from '../../declarations/enums/http-method-name.enum';
-import { RequestPatcher } from '../../declarations/types/request-patcher.type';
+import { MethodHandlerInputPatcher } from '../../declarations/types/method-handler-input-patcher.type';
 import { Redirect } from './redirect.decorator';
 
 describe('redirect.decorator', () => {
@@ -16,39 +17,38 @@ describe('redirect.decorator', () => {
   it('should use PatchRequest', () => {
     Redirect('FAKE_URL');
 
-    expect(mockPatchRequest).toHaveBeenCalledTimes(1);
+    expect(mockPatchInput).toHaveBeenCalledTimes(1);
   });
 
   it('should pass RequestPatcher function to PatchRequest', () => {
     Redirect('FAKE_URL');
 
-    const firstArgument: RequestPatcher<HttpRequest<unknown>> =
-      mockPatchRequest.mock.lastCall[0];
+    const patcher: MethodHandlerInputPatcher<unknown> = getLastPatcher();
 
-    expect(typeof firstArgument).toBe('function');
-    expect(firstArgument).toHaveLength(1);
+    expect(typeof patcher).toBe('function');
+    expect(patcher).toHaveLength(1);
   });
 
   it('should set url by using PatchRequest', () => {
     const newUrl = 'NEW_URL';
     Redirect(newUrl);
-    const requestPatcher: RequestPatcher<unknown> =
-      mockPatchRequest.mock.lastCall[0];
 
-    const patchedRequest = requestPatcher(baseRequest);
+    const patchedInput = getLastPatcher()(
+      new MethodHandlerInput({ request: baseRequest })
+    );
 
-    expect(patchedRequest.url).toBe(newUrl);
+    expect(patchedInput.request.url).toBe(newUrl);
   });
 
   it('should patch url by using PatchRequest', () => {
     const newUrl = 'NEW_URL';
     Redirect((url) => url + newUrl);
-    const requestPatcher: RequestPatcher<unknown> =
-      mockPatchRequest.mock.lastCall[0];
 
-    const patchedRequest = requestPatcher(baseRequest);
+    const patchedInput = getLastPatcher()(
+      new MethodHandlerInput({ request: baseRequest })
+    );
 
-    expect(patchedRequest.url).toBe(baseUrl + newUrl);
+    expect(patchedInput.request.url).toBe(baseUrl + newUrl);
   });
 
   it('can be used multiple times', () => {
@@ -59,15 +59,21 @@ describe('redirect.decorator', () => {
       public fakeFn() {}
     }
 
-    const mockPatchRequestCalls = mockPatchRequest.mock.calls;
+    const mockPatchRequestCalls = mockPatchInput.mock.calls;
     expect(mockPatchRequestCalls).toHaveLength(2);
     mockPatchRequestCalls.forEach(
-      ([requestPatcher]: [RequestPatcher<unknown>], index: number) => {
-        const patchedRequest = requestPatcher(baseRequest);
+      ([patcher]: [MethodHandlerInputPatcher<unknown>], index: number) => {
+        const patchedInput = patcher(
+          new MethodHandlerInput({ request: baseRequest })
+        );
 
         const uriPart = redirectUriParts[index];
-        expect(patchedRequest.url).toBe(baseUrl + uriPart);
+        expect(patchedInput.request.url).toBe(baseUrl + uriPart);
       }
     );
   });
+
+  function getLastPatcher(): MethodHandlerInputPatcher<unknown> {
+    return mockPatchInput.mock.lastCall[0];
+  }
 });

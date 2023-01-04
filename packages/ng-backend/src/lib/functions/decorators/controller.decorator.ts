@@ -5,8 +5,11 @@ import {
   HttpRequest,
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { MethodHandlerConfig } from '../../api';
+import { MethodHandlerInput } from '../../declarations/classes/method-handler-input.class';
 import { RequestHandlersBuilder } from '../../declarations/classes/request-handlers-builder.class';
-import { MethodHandler } from '../../declarations/types/method-handler.type';
+import { extractRegExpVariables } from '../common/extract-reg-exp-variables.function';
+import { mergeArraysIntoEntries } from '../common/merge-arrays-into-entries.function';
 import { runMethodHandler } from '../common/run-method-handler.function';
 import { isClassConstructor } from '../type-guards/is-class-constructor.function';
 
@@ -34,14 +37,23 @@ export const Controller =
           return stub();
         }
 
-        const handler: MethodHandler | undefined =
-          RequestHandlersBuilder.getRequestHandlers(this).getHandler(request);
+        const handlerConfig: MethodHandlerConfig | undefined =
+          RequestHandlersBuilder.getRequestHandlers(this).getHandlerConfig(
+            request
+          );
 
-        if (handler === undefined) {
+        if (handlerConfig === undefined) {
           return stub();
         }
 
-        return runMethodHandler(request, next, handler);
+        return runMethodHandler(
+          new MethodHandlerInput({
+            request,
+            dynamicParamsMap: getDynamicParamsMap(request.url, handlerConfig),
+          }),
+          next,
+          handlerConfig.run
+        );
       }
 
       private isRegisteredUrl(url: string): boolean {
@@ -49,3 +61,18 @@ export const Controller =
       }
     };
   };
+
+function getDynamicParamsMap(
+  url: string,
+  handlerConfig: MethodHandlerConfig
+): Map<string, string> {
+  return new Map(
+    mergeArraysIntoEntries(
+      handlerConfig.paramNames,
+      extractRegExpVariables(
+        url,
+        new RegExp(handlerConfig.routeRegExpPart, 'gi')
+      )
+    )
+  );
+}

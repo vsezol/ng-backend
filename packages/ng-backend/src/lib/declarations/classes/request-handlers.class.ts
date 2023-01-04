@@ -2,7 +2,6 @@ import { HttpRequest } from '@angular/common/http';
 import { isEnumValue } from '../../functions/type-guards/is-enum-value.function';
 import { HttpMethodName } from '../enums/http-method-name.enum';
 import { MethodHandlerConfig } from '../interfaces/method-handler-config.interface';
-import { MethodHandler } from '../types/method-handler.type';
 
 export class RequestHandlers {
   public baseUrl: string = '';
@@ -20,22 +19,22 @@ export class RequestHandlers {
     this.disabledHandlersKeys.add(key);
   }
 
-  public getHandler(request: HttpRequest<unknown>): MethodHandler | undefined {
+  public getHandlerConfig(
+    request: HttpRequest<unknown>
+  ): MethodHandlerConfig | undefined {
     if (!this.isRegisteredHttpMethod(request.method) || this.disabled) {
       return undefined;
     }
 
-    const [handler]: MethodHandler[] = this.getHandlersConfigsByMethod(
+    const [config]: MethodHandlerConfig[] = this.getHandlersConfigsByMethod(
       request.method
-    )
-      .filter(
-        ({ canActivate, key }: MethodHandlerConfig) =>
-          !this.disabledHandlersKeys.has(key) &&
-          canActivate(this.baseUrl, request.url)
-      )
-      .map(({ run }: MethodHandlerConfig) => run);
+    ).filter(
+      ({ canActivate, key }: MethodHandlerConfig) =>
+        !this.disabledHandlersKeys.has(key) &&
+        canActivate(this.baseUrl, request.url)
+    );
 
-    return handler;
+    return config;
   }
 
   public registerHandler(config: MethodHandlerConfig): void {

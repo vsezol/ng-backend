@@ -8,9 +8,7 @@ export function AutoResponseFull<T extends unknown>(
     __: string | symbol,
     descriptor: PropertyDescriptor
   ): PropertyDescriptor => {
-    descriptor.value = () => {
-      return new HttpResponse<T>(...params);
-    };
+    descriptor.value = () => new HttpResponse<T>(...params);
 
     return descriptor;
   };
