@@ -1,10 +1,6 @@
 {
   "extends": "./tsconfig.json",
-  "include": [
-    "src/**/*.ts",
-    "src/app/declarations/types/method-handler-result.type.ts",
-    "src/app/declarations/interfaces/todo.interface,ts"
-  ],
+  "include": ["src/**/*.ts"],
   "compilerOptions": {
     "types": ["jest", "node"]
   }
