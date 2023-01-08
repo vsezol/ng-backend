@@ -1,5 +1,5 @@
+import { concatUriRegExpParts } from 'utilities';
 import { MethodGuard } from '../../declarations/types/method-guard.type';
-import { concatUriRegExpParts } from './concat-uri-reg-exp-parts.function';
 
 export const createMethodGuard =
   (routeRegExpPart: string): MethodGuard =>

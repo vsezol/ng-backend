@@ -1,4 +1,5 @@
-import { concatUriRegExpParts, DynamicUriPart, UriPart } from '../../api';
+import { concatUriRegExpParts } from 'utilities';
+import { DynamicUriPart, UriPart } from '../../api';
 import { RequestHandlersBuilder } from '../../declarations/classes/request-handlers-builder.class';
 import { HttpMethodName } from '../../declarations/enums/http-method-name.enum';
 import { MethodHandler } from '../../declarations/types/method-handler.type';

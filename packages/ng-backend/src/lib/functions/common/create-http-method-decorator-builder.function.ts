@@ -5,17 +5,13 @@ import { UrlParamType } from '../../declarations/types/url-param-type.type';
 import { HttpMethod } from '../decorators/http-method.decorator';
 import { createUriRegExpPartsBuilder } from './create-uri-parts-list-builder.function';
 
-const target: HttpMethodDecoratorBuilder = <HttpMethodDecoratorBuilder>(
-  (() => {})
-);
-
 export function createHttpMethodDecoratorBuilder(
   method: HttpMethodName
 ): HttpMethodDecoratorBuilder {
   const uriPartsListBuilder: UriPartsListBuilder =
     createUriRegExpPartsBuilder();
 
-  return new Proxy<HttpMethodDecoratorBuilder>(target, {
+  return new Proxy<HttpMethodDecoratorBuilder>(createTarget(), {
     apply: (_: unknown, __: unknown, [uriPart]: [string] | []) =>
       HttpMethod(method, uriPart ?? uriPartsListBuilder()),
 
@@ -29,11 +25,7 @@ function createProxyForKey(
   rootProxy: HttpMethodDecoratorBuilder,
   forKey: string
 ): HttpMethodDecoratorBuilder {
-  const target: HttpMethodDecoratorBuilder = <HttpMethodDecoratorBuilder>(
-    (() => {})
-  );
-
-  return new Proxy<HttpMethodDecoratorBuilder>(target, {
+  return new Proxy<HttpMethodDecoratorBuilder>(createTarget(), {
     apply: (_: unknown, __: unknown, [urlParamType]: [UrlParamType] | []) => {
       if (urlParamType === undefined) {
         uriPartsListBuilder[forKey];
@@ -52,4 +44,8 @@ function createProxyForKey(
       return rootProxy[key];
     },
   });
+}
+
+function createTarget(): HttpMethodDecoratorBuilder {
+  return <HttpMethodDecoratorBuilder>(() => {});
 }
