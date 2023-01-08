@@ -6,7 +6,8 @@ jest.mock('../decorators/http-method.decorator', () => {
   };
 });
 
-import { DynamicUriPart, UriPart } from '../../api';
+import { DynamicUriPart } from '../../declarations/classes/dynamic-uri-part.class';
+import { UriPart } from '../../declarations/classes/uri-part.class';
 import { HttpMethodName } from '../../declarations/enums/http-method-name.enum';
 import { HttpMethodDecoratorBuilder } from '../../declarations/types/http-method-decorator-builder.type';
 import { createHttpMethodDecoratorBuilder } from './create-http-method-decorator-builder.function';

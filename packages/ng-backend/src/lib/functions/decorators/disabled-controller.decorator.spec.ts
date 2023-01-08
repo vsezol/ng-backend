@@ -10,11 +10,9 @@ const mockRequestHandlersBuilder = {
   getRequestHandlers: jest.fn().mockReturnValue(mockRequestHandlers),
 };
 
-jest.mock('../../declarations/classes/request-handlers-builder.class', () => ({
+jest.mock('ng-backend/internal', () => ({
+  ...jest.requireActual('ng-backend/internal'),
   RequestHandlersBuilder: mockRequestHandlersBuilder,
-}));
-
-jest.mock('../../declarations/classes/request-handlers.class', () => ({
   RequestHandlers: mockRequestHandlers,
 }));
 

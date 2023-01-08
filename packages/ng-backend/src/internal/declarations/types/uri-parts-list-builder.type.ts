@@ -1,5 +1,4 @@
-import { UriPart } from '../api';
-import { UrlParamType } from './url-param-type.type';
+import { UriPart, UrlParamType } from 'ng-backend/internal';
 
 export type UriPartsListBuilder = {
   [key in string]: UriPartsListBuilder;

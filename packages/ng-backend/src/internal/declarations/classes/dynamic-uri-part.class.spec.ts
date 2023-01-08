@@ -10,9 +10,9 @@ jest.mock('../constants/reg-exp-part-by-url-param-type.const', () => {
   return root;
 });
 
-import { UrlParamType } from '../api';
 import { REG_EXP_PART_BY_URL_PARAM_TYPE } from '../constants/reg-exp-part-by-url-param-type.const';
 import { RegExpPart } from '../enums/regexp-part.enum';
+import { UrlParamType } from '../types/url-param-type.type';
 import { DynamicUriPart } from './dynamic-uri-part.class';
 
 mockRegExpPartByUrlParamTypeGetter.mockReturnValue(

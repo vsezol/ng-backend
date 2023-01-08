@@ -1,1 +1,2 @@
-export * from './lib/api';
+export { MethodHandlerInput, MethodHandlerResult } from './internal';
+export * from './lib';

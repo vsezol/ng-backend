@@ -1,5 +1,5 @@
+import { RegExpPart } from 'packages/ng-backend/src/internal/declarations/enums/regexp-part.enum';
 import { Nullable } from 'utilities';
-import { RegExpPart } from '../../../../../ng-backend/src/lib/declarations/enums/regexp-part.enum';
 
 /**
  * Function that concatenates parts of uri as stringified regexp
