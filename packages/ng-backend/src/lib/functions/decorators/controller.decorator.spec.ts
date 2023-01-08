@@ -39,9 +39,10 @@ import {
   HttpResponse,
 } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { HttpMethodName, MethodHandlerConfig } from '../../api';
+import { hasProperty } from 'utilities';
 import { MethodHandlerInput } from '../../declarations/classes/method-handler-input.class';
-import { hasProperty } from '../type-guards/has-property.function';
+import { HttpMethodName } from '../../declarations/enums/http-method-name.enum';
+import { MethodHandlerConfig } from '../../declarations/interfaces/method-handler-config.interface';
 import { Controller } from './controller.decorator';
 
 describe('controller.decorator', () => {
