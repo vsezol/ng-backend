@@ -1,5 +1,5 @@
 {
-  "entryPoints": ["src/index.ts"],
+  "entryPoints": ["src/lib/api.ts"],
   "readme": "README.md",
   "name": "NgBackend",
   "tsconfig": "tsconfig.lib.json",

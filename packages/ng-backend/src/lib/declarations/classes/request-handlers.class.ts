@@ -1,5 +1,5 @@
 import { HttpRequest } from '@angular/common/http';
-import { isEnumValue } from '../../functions/type-guards/is-enum-value.function';
+import { isEnumValue } from 'utilities';
 import { HttpMethodName } from '../enums/http-method-name.enum';
 import { MethodHandlerConfig } from '../interfaces/method-handler-config.interface';
 

@@ -1,7 +1,7 @@
+import { isNil } from 'utilities';
 import { MethodHandlerInput } from '../../declarations/classes/method-handler-input.class';
 import { MethodHandlerInputPatcher } from '../../declarations/types/method-handler-input-patcher.type';
 import { MethodHandler } from '../../declarations/types/method-handler.type';
-import { isNil } from '../api';
 
 export function PatchInput<T, U = T>(
   patcher: MethodHandlerInputPatcher<T, U>

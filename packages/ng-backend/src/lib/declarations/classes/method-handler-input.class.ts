@@ -1,5 +1,5 @@
 import { HttpRequest } from '@angular/common/http';
-import { isNil } from '../../functions/type-guards/is-nil.function';
+import { isNil } from 'utilities';
 
 interface Options<T> {
   request: HttpRequest<T>;
