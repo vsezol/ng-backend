@@ -4,16 +4,18 @@ import {
   HttpInterceptor,
   HttpRequest,
 } from '@angular/common/http';
+import {
+  MethodHandlerConfig,
+  MethodHandlerInput,
+  RequestHandlersBuilder,
+  runMethodHandler,
+} from 'ng-backend/internal';
 import { Observable } from 'rxjs';
 import {
   extractRegExpVariables,
   isClassConstructor,
   mergeArraysIntoEntries,
 } from 'utilities';
-import { MethodHandlerConfig } from '../../api';
-import { MethodHandlerInput } from '../../declarations/classes/method-handler-input.class';
-import { RequestHandlersBuilder } from '../../declarations/classes/request-handlers-builder.class';
-import { runMethodHandler } from '../common/run-method-handler.function';
 
 export const Controller =
   (baseUrl: string): ClassDecorator =>

@@ -1,7 +1,9 @@
 import { HttpRequest } from '@angular/common/http';
-import { MethodHandlerInput } from '../../declarations/classes/method-handler-input.class';
-import { HttpMethodName } from '../../declarations/enums/http-method-name.enum';
-import type { MethodHandlerResult } from '../../declarations/types/method-handler-result.type';
+import {
+  HttpMethodName,
+  MethodHandlerInput,
+  MethodHandlerResult,
+} from 'ng-backend/internal';
 import { PatchInput } from './patch-input.decorator';
 
 describe('patch-input.decorator', () => {

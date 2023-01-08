@@ -1,5 +1,5 @@
+import { RequestHandlersBuilder } from 'ng-backend/internal';
 import { isClassConstructor } from 'utilities';
-import { RequestHandlersBuilder } from '../../declarations/classes/request-handlers-builder.class';
 
 export const DisabledController: ClassDecorator = <T extends Function>(
   classConstructorReference: T

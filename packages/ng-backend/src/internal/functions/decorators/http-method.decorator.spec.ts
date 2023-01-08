@@ -9,21 +9,23 @@ const mockRequestHandlersBuilder = {
 const mockMethodGuard = jest.fn();
 const mockCreateMethodGuard = jest.fn().mockReturnValue(mockMethodGuard);
 
-jest.mock('../../declarations/classes/request-handlers-builder.class', () => ({
-  RequestHandlersBuilder: mockRequestHandlersBuilder,
-}));
-
 jest.mock('../../declarations/classes/request-handlers.class', () => ({
   RequestHandlers: mockRequestHandlers,
+}));
+
+jest.mock('../../declarations/classes/request-handlers-builder.class', () => ({
+  RequestHandlersBuilder: mockRequestHandlersBuilder,
 }));
 
 jest.mock('../common/create-method-guard.function', () => ({
   createMethodGuard: mockCreateMethodGuard,
 }));
 
-import { DynamicUriPart, RegExpPart, UriPart } from '../../api';
-import { HttpMethodName } from '../../declarations/enums/http-method-name.enum';
-import { MethodHandlerConfig } from '../../declarations/interfaces/method-handler-config.interface';
+import { DynamicUriPart } from 'packages/ng-backend/src/internal/declarations/classes/dynamic-uri-part.class';
+import { UriPart } from 'packages/ng-backend/src/internal/declarations/classes/uri-part.class';
+import { RegExpPart } from 'packages/ng-backend/src/internal/declarations/enums/regexp-part.enum';
+import { HttpMethodName } from '../../../internal/declarations/enums/http-method-name.enum';
+import { MethodHandlerConfig } from '../../../internal/declarations/interfaces/method-handler-config.interface';
 import { HttpMethod } from './http-method.decorator';
 
 describe('http-method.decorator', () => {
