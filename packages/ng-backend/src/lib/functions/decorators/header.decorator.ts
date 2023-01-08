@@ -1,4 +1,4 @@
-import { MethodHandlerInput } from 'ng-backend/internal';
+import { MethodHandlerInput } from 'base';
 import { PatchInput } from './patch-input.decorator';
 
 /**

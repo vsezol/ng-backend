@@ -1,6 +1,8 @@
-import { HttpMethodName } from 'ng-backend/internal';
-import { HttpMethodDecoratorBuilder } from '../../../../internal/declarations/types/http-method-decorator-builder.type';
-import { createHttpMethodDecoratorBuilder } from '../../../../internal/functions/common/create-http-method-decorator-builder.function';
+import {
+  createHttpMethodDecoratorBuilder,
+  HttpMethodDecoratorBuilder,
+  HttpMethodName,
+} from 'base';
 
 export const Patch: HttpMethodDecoratorBuilder =
   createHttpMethodDecoratorBuilder(HttpMethodName.PATCH);

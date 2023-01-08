@@ -2,7 +2,7 @@ import {
   MethodHandler,
   MethodHandlerInput,
   MethodHandlerInputPatcher,
-} from 'ng-backend/internal';
+} from 'base';
 import { isNil } from 'utilities';
 
 export function PatchInput<T, U = T>(

@@ -7,11 +7,11 @@
     "build": {
       "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
+      "dependsOn": ["barrel", "^build"],
       "options": {
         "outputPath": "dist/packages/ng-backend",
         "main": "packages/ng-backend/src/index.ts",
-        "tsConfig": "packages/ng-backend/tsconfig.lib.json",
-        "assets": ["packages/ng-backend/*.md"]
+        "tsConfig": "packages/ng-backend/tsconfig.lib.json"
       }
     },
     "lint": {
@@ -24,6 +24,7 @@
     "test": {
       "executor": "@nrwl/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "dependsOn": ["barrel"],
       "options": {
         "jestConfig": "packages/ng-backend/jest.config.ts",
         "passWithNoTests": true
@@ -33,7 +34,7 @@
       "executor": "nx:run-commands",
       "options": {
         "cwd": "./packages/ng-backend",
-        "command": "barrelsby --config ./barrelsby.json --directory ./src"
+        "command": "barrelsby --config ./barrelsby.json --directory ./src/lib"
       }
     },
     "typedoc": {

@@ -1,13 +1,9 @@
 import { HttpRequest } from '@angular/common/http';
-import {
-  HttpMethodName,
-  MethodHandlerInput,
-  MethodHandlerResult,
-} from 'ng-backend/internal';
+import { HttpMethodName, MethodHandlerInput, MethodHandlerResult } from 'base';
 import { PatchInput } from './patch-input.decorator';
 
 describe('patch-input.decorator', () => {
-  const beginUrl: string = 'BEGIN_URL';
+  const beginUrl = 'BEGIN_URL';
   const beginInput: MethodHandlerInput = new MethodHandlerInput({
     request: new HttpRequest<void>(HttpMethodName.GET, beginUrl),
   });
@@ -45,7 +41,7 @@ describe('patch-input.decorator', () => {
   });
 
   it('should be ignored if method returns full new HttpRequest', () => {
-    const returnedUrl: string = 'RETURNED_URL';
+    const returnedUrl = 'RETURNED_URL';
     class Fake {
       @PatchInput((input) =>
         input.clone({
@@ -70,7 +66,7 @@ describe('patch-input.decorator', () => {
   });
 
   it('should not patch anything if target method returns custom value', () => {
-    const customValue: string = 'CUSTOM_VALUE';
+    const customValue = 'CUSTOM_VALUE';
     class Fake {
       @PatchInput((input) => input)
       fakeFn(): MethodHandlerResult {

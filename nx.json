@@ -5,7 +5,7 @@
     "default": {
       "runner": "@nrwl/nx-cloud",
       "options": {
-        "cacheableOperations": ["build", "lint", "test", "e2e"],
+        "cacheableOperations": ["build", "lint", "test", "e2e", "barrel"],
         "accessToken": "OTg1NGFiNDYtN2I5NS00MDZmLTg1NzYtOWRiZjY5ZjU5MjE3fHJlYWQtd3JpdGU="
       }
     }
@@ -30,5 +30,11 @@
       "style": "scss"
     }
   },
-  "defaultProject": "ng-backend"
+  "defaultProject": "ng-backend",
+  "pluginsConfig": {
+    "@nrwl/js": {
+      "analyzeSourceFiles": true
+    }
+  },
+  "useDaemonProcess": false
 }

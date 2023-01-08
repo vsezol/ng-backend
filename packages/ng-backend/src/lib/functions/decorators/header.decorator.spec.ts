@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 const mockPatchInput: jest.Mock<MethodHandlerInputPatcher<unknown>> = jest.fn();
 
 jest.mock('./patch-input.decorator', () => ({
@@ -9,7 +10,7 @@ import {
   HttpMethodName,
   MethodHandlerInput,
   MethodHandlerInputPatcher,
-} from 'ng-backend/internal';
+} from 'base';
 import { Header } from './header.decorator';
 
 describe('header.decorator', () => {

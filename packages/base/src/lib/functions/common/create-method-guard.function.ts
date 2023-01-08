@@ -9,6 +9,6 @@ export const createMethodGuard =
       routeRegExpPart
     );
 
-    const regExp: RegExp = new RegExp(`${fullUrl}$`, 'gi');
+    const regExp = new RegExp(`${fullUrl}$`, 'gi');
     return regExp.test(inputUriPart);
   };

@@ -2,7 +2,17 @@
   "name": "vsezol",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "lint": "nx run-many --target=lint --all --parallel",
+    "build": "nx run-many --target=build --all --parallel",
+    "test": "nx run-many --target=test --all --parallel",
+    "barrel": "nx run-many --target=barrel --all --parallel",
+    "affected:lint": "nx affected:lint --max-warnings=0",
+    "affected:build": "nx affected:build --configuration=production",
+    "affected:test": "nx affected:test",
+    "affected:barrel": "nx affected:barrel",
+    "affected:ci": "npm run affected:barrel && npm run affected:build && npm run affected:lint && npm run affected:test"
+  },
   "private": true,
   "devDependencies": {
     "@angular-devkit/build-angular": "~15.0.0",
@@ -21,6 +31,7 @@
     "@nrwl/nx-cloud": "latest",
     "@types/jest": "28.1.1",
     "@types/node": "16.11.7",
+    "@typescript-eslint/eslint-plugin": "^5.48.0",
     "barrelsby": "^2.5.1",
     "cypress": "^11.0.0",
     "eslint-plugin-cypress": "^2.10.3",

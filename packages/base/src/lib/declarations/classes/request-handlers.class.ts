@@ -4,9 +4,9 @@ import { HttpMethodName } from '../enums/http-method-name.enum';
 import { MethodHandlerConfig } from '../interfaces/method-handler-config.interface';
 
 export class RequestHandlers {
-  public baseUrl: string = '';
+  public baseUrl = '';
 
-  public disabled: boolean = false;
+  public disabled = false;
 
   private readonly handlerConfigByMethod: Map<
     HttpMethodName,
