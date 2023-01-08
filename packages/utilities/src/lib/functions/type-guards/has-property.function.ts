@@ -1,4 +1,4 @@
-import { isNil } from '../type-guards/is-nil.function';
+import { isNil } from './is-nil.function';
 
 export const hasProperty = <T extends object, K extends string>(
   input: T | undefined | null,

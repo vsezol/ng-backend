@@ -13,12 +13,6 @@ describe('is-enum-value.function', () => {
     Three,
   }
 
-  enum StringNumberEnum {
-    One = '1',
-    Two = '2',
-    Three = '3',
-  }
-
   enum EmptyEnum {}
 
   it('should return true for key that exists in the enum', () => {

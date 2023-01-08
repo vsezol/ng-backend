@@ -1,4 +1,4 @@
-import { RequestHandlersBuilder } from 'ng-backend/internal';
+import { RequestHandlersBuilder } from 'base';
 
 export function DisabledHandler(
   host: object,

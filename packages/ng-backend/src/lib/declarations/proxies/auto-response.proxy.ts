@@ -1,3 +1,4 @@
+import { VOID } from 'utilities';
 import { AutoResponseBody } from '../../functions/decorators/auto-response-body.decorator';
 import { AutoResponseFull } from '../../functions/decorators/auto-response-full.decorator';
 
@@ -6,7 +7,7 @@ interface AutoResponseStructure {
   body: typeof AutoResponseBody;
 }
 
-const target: AutoResponseStructure = <AutoResponseStructure>(() => {});
+const target: AutoResponseStructure = <AutoResponseStructure>(() => VOID);
 
 export const AutoResponse: AutoResponseStructure =
   new Proxy<AutoResponseStructure>(target, {

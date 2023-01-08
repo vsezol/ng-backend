@@ -4,8 +4,7 @@ import {
   HttpRequest,
   HttpResponse,
 } from '@angular/common/http';
-import { of, switchMap } from 'rxjs';
-import { Observable } from 'rxjs/internal/Observable';
+import { Observable, of, switchMap } from 'rxjs';
 import { getObservable, VOID } from 'utilities';
 import { MethodHandlerInput } from '../../declarations/classes/method-handler-input.class';
 import { MethodHandlerBasicResult } from '../../declarations/types/method-handler-basic-result.type';

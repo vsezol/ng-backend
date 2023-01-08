@@ -1,4 +1,4 @@
-import { ClassConstructor } from '../../../../../utilities/src/lib/declarations/types/class-constructor.type';
+import { ClassConstructor } from '../../declarations/types/class-constructor.type';
 
 export function isClassConstructor(input: unknown): input is ClassConstructor {
   return (

@@ -1,0 +1,43 @@
+{
+  "name": "base",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/base/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "dependsOn": ["barrel", "^build"],
+      "options": {
+        "outputPath": "dist/packages/base",
+        "main": "packages/base/src/index.ts",
+        "tsConfig": "packages/base/tsconfig.lib.json",
+        "assets": ["packages/base/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/base/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "dependsOn": ["barrel"],
+      "options": {
+        "jestConfig": "packages/base/jest.config.ts",
+        "passWithNoTests": true
+      }
+    },
+    "barrel": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "./packages/base",
+        "command": "barrelsby --config ./barrelsby.json --directory ./src/lib"
+      }
+    }
+  },
+  "tags": []
+}

@@ -1,4 +1,4 @@
-const mockHttpMethod = jest.fn().mockReturnValue(() => {});
+const mockHttpMethod = jest.fn().mockReturnValue(() => VOID);
 
 jest.mock('../decorators/http-method.decorator', () => {
   return {
@@ -6,6 +6,7 @@ jest.mock('../decorators/http-method.decorator', () => {
   };
 });
 
+import { VOID } from 'utilities';
 import { DynamicUriPart } from '../../declarations/classes/dynamic-uri-part.class';
 import { UriPart } from '../../declarations/classes/uri-part.class';
 import { HttpMethodName } from '../../declarations/enums/http-method-name.enum';

@@ -10,12 +10,13 @@ const mockRequestHandlersBuilder = {
   getRequestHandlers: jest.fn().mockReturnValue(mockRequestHandlers),
 };
 
-jest.mock('ng-backend/internal', () => ({
-  ...jest.requireActual('ng-backend/internal'),
+jest.mock('base', () => ({
+  ...jest.requireActual('base'),
   RequestHandlersBuilder: mockRequestHandlersBuilder,
   RequestHandlers: mockRequestHandlers,
 }));
 
+import { VOID } from 'utilities';
 import { DisabledController } from './disabled-controller.decorator';
 
 describe('disabled-controller.decorator', () => {
@@ -53,6 +54,6 @@ describe('disabled-controller.decorator', () => {
   });
 
   it('should throw error if decoration target is not class constructor', () => {
-    expect(() => DisabledController(() => {})).toThrowError();
+    expect(() => DisabledController(() => VOID)).toThrowError();
   });
 });

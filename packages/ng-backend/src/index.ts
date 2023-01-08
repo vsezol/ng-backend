@@ -1,2 +1,2 @@
-export { MethodHandlerInput, MethodHandlerResult } from './internal';
-export * from './lib';
+export { MethodHandlerInput, MethodHandlerResult } from 'base';
+export * from './lib/api';
