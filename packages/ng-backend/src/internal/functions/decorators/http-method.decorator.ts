@@ -1,9 +1,12 @@
+import {
+  createMethodGuard,
+  DynamicUriPart,
+  HttpMethodName,
+  MethodHandler,
+  RequestHandlersBuilder,
+  UriPart,
+} from 'ng-backend/internal';
 import { concatUriRegExpParts } from 'utilities';
-import { DynamicUriPart, UriPart } from '../../api';
-import { RequestHandlersBuilder } from '../../declarations/classes/request-handlers-builder.class';
-import { HttpMethodName } from '../../declarations/enums/http-method-name.enum';
-import { MethodHandler } from '../../declarations/types/method-handler.type';
-import { createMethodGuard } from '../common/create-method-guard.function';
 
 type Route = UriPart[] | string | RegExp;
 

@@ -1,7 +1,9 @@
+import {
+  MethodHandler,
+  MethodHandlerInput,
+  MethodHandlerInputPatcher,
+} from 'ng-backend/internal';
 import { isNil } from 'utilities';
-import { MethodHandlerInput } from '../../declarations/classes/method-handler-input.class';
-import { MethodHandlerInputPatcher } from '../../declarations/types/method-handler-input-patcher.type';
-import { MethodHandler } from '../../declarations/types/method-handler.type';
 
 export function PatchInput<T, U = T>(
   patcher: MethodHandlerInputPatcher<T, U>

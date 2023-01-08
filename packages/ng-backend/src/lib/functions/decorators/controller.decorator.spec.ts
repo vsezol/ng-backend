@@ -19,15 +19,10 @@ const mockRequestHandlersBuilder = {
   getRequestHandlers: jest.fn().mockReturnValue(mockRequestHandlers),
 };
 
-jest.mock('../../declarations/classes/request-handlers-builder.class', () => ({
+jest.mock('ng-backend/internal', () => ({
+  ...jest.requireActual('ng-backend/internal'),
   RequestHandlersBuilder: mockRequestHandlersBuilder,
-}));
-
-jest.mock('../../declarations/classes/request-handlers.class', () => ({
   RequestHandlers: mockRequestHandlers,
-}));
-
-jest.mock('../../functions/common/run-method-handler.function', () => ({
   runMethodHandler: mockRunMethodHandler,
 }));
 
@@ -38,11 +33,12 @@ import {
   HttpRequest,
   HttpResponse,
 } from '@angular/common/http';
+import { MethodHandlerInput } from 'ng-backend/internal';
+
 import { Observable, of } from 'rxjs';
 import { hasProperty } from 'utilities';
-import { MethodHandlerInput } from '../../declarations/classes/method-handler-input.class';
-import { HttpMethodName } from '../../declarations/enums/http-method-name.enum';
-import { MethodHandlerConfig } from '../../declarations/interfaces/method-handler-config.interface';
+import { HttpMethodName } from '../../../internal/declarations/enums/http-method-name.enum';
+import { MethodHandlerConfig } from '../../../internal/declarations/interfaces/method-handler-config.interface';
 import { Controller } from './controller.decorator';
 
 describe('controller.decorator', () => {
