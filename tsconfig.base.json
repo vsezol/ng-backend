@@ -15,8 +15,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "base": ["packages/base/src/index.ts"],
       "ng-backend": ["packages/ng-backend/src/index.ts"],
-      "ng-backend/internal": ["packages/ng-backend/src/internal/index.ts"],
       "utilities": ["packages/utilities/src/index.ts"]
     },
     "noPropertyAccessFromIndexSignature": false

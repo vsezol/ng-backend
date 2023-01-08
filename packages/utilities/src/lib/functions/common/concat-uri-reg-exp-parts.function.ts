@@ -1,5 +1,4 @@
-import { RegExpPart } from 'packages/ng-backend/src/internal/declarations/enums/regexp-part.enum';
-import { Nullable } from 'utilities';
+import { Nullable } from '../../declarations/types/nullable.type';
 
 /**
  * Function that concatenates parts of uri as stringified regexp
@@ -15,13 +14,16 @@ import { Nullable } from 'utilities';
  * ```
  */
 export const concatUriRegExpParts = (...parts: Nullable<string>[]): string => {
-  return parts
-    .filter(
-      (item: Nullable<string>): item is string => typeof item === 'string'
-    )
-    .map((part: string) =>
-      part.replace(/ /gi, '').replace(/^\/+/gi, '').replace(/\/+$/gi, '')
-    )
-    .filter((item: string) => item.length > 0)
-    .join(RegExpPart.Slash);
+  return (
+    parts
+      .filter(
+        (item: Nullable<string>): item is string => typeof item === 'string'
+      )
+      .map((part: string) =>
+        part.replace(/ /gi, '').replace(/^\/+/gi, '').replace(/\/+$/gi, '')
+      )
+      .filter((item: string) => item.length > 0)
+      // eslint-disable-next-line no-useless-escape
+      .join(`\/`)
+  );
 };

@@ -19,8 +19,8 @@ const mockRequestHandlersBuilder = {
   getRequestHandlers: jest.fn().mockReturnValue(mockRequestHandlers),
 };
 
-jest.mock('ng-backend/internal', () => ({
-  ...jest.requireActual('ng-backend/internal'),
+jest.mock('base', () => ({
+  ...jest.requireActual('base'),
   RequestHandlersBuilder: mockRequestHandlersBuilder,
   RequestHandlers: mockRequestHandlers,
   runMethodHandler: mockRunMethodHandler,
@@ -33,12 +33,9 @@ import {
   HttpRequest,
   HttpResponse,
 } from '@angular/common/http';
-import { MethodHandlerInput } from 'ng-backend/internal';
-
+import { HttpMethodName, MethodHandlerConfig, MethodHandlerInput } from 'base';
 import { Observable, of } from 'rxjs';
-import { hasProperty } from 'utilities';
-import { HttpMethodName } from '../../../internal/declarations/enums/http-method-name.enum';
-import { MethodHandlerConfig } from '../../../internal/declarations/interfaces/method-handler-config.interface';
+import { hasProperty, VOID } from 'utilities';
 import { Controller } from './controller.decorator';
 
 describe('controller.decorator', () => {
@@ -115,7 +112,7 @@ describe('controller.decorator', () => {
     if (!isHttpInterceptor(testInstance)) {
       throw new Error();
     }
-    let result$: Observable<HttpEvent<unknown>> = testInstance.intercept(
+    const result$: Observable<HttpEvent<unknown>> = testInstance.intercept(
       request,
       mockHttpHandler
     );
@@ -169,7 +166,7 @@ describe('controller.decorator', () => {
   });
 
   it('should throw error if decoration target is not class constructor', () => {
-    expect(() => Controller('fake')(() => {})).toThrowError();
+    expect(() => Controller('fake')(() => VOID)).toThrowError();
   });
 });
 

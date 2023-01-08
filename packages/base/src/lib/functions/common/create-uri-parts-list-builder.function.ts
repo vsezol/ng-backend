@@ -1,10 +1,11 @@
+import { VOID } from 'utilities';
 import { DynamicUriPart } from '../../declarations/classes/dynamic-uri-part.class';
 import { UriPart } from '../../declarations/classes/uri-part.class';
 import { UriPartsListBuilder } from '../../declarations/types/uri-parts-list-builder.type';
 import { UrlParamType } from '../../declarations/types/url-param-type.type';
 
 export function createUriRegExpPartsBuilder(): UriPartsListBuilder {
-  const target: UriPartsListBuilder = <UriPartsListBuilder>(() => {});
+  const target: UriPartsListBuilder = <UriPartsListBuilder>(() => VOID);
 
   const uriParts: UriPart[] = [];
 

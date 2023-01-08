@@ -1,3 +1,4 @@
+import { VOID } from '../../declarations/constants/void.const';
 import { isClassConstructor } from './is-class-constructor.function';
 
 describe('is-class-constructor.function', () => {
@@ -36,7 +37,7 @@ describe('is-class-constructor.function', () => {
   });
 
   it('should return false if input is arrow function', () => {
-    expect(isClassConstructor(() => {})).toBe(false);
+    expect(isClassConstructor(() => VOID)).toBe(false);
   });
 
   it('should return true if input is anonymous class', () => {

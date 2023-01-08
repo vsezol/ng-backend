@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 const mockRequestHandlers = {
   disableHandlerByKey: jest.fn(),
 };
@@ -6,8 +7,8 @@ const mockRequestHandlersBuilder = {
   getRequestHandlers: jest.fn().mockReturnValue(mockRequestHandlers),
 };
 
-jest.mock('ng-backend/internal', () => ({
-  ...jest.requireActual('ng-backend/internal'),
+jest.mock('base', () => ({
+  ...jest.requireActual('base'),
   RequestHandlersBuilder: mockRequestHandlersBuilder,
   RequestHandlers: mockRequestHandlers,
 }));

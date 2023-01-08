@@ -1,6 +1,6 @@
 import { AutoResponseFull } from './auto-response-full.decorator';
 
-export function AutoResponseBody<T extends unknown>(body: T): MethodDecorator {
+export function AutoResponseBody<T>(body: T): MethodDecorator {
   return AutoResponseFull<T>({
     body,
   });

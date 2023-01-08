@@ -10,7 +10,7 @@ describe('auto-response-full.decorator', () => {
   });
 
   it('should modify the class method and returns HttpResponse instead of any value', () => {
-    const originalValue: string = 'hello world';
+    const originalValue = 'hello world';
     class Fake {
       @AutoResponseFull()
       public fakeFn() {

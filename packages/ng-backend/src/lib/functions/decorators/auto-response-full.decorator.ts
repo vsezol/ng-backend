@@ -1,6 +1,6 @@
 import { HttpResponse } from '@angular/common/http';
 
-export function AutoResponseFull<T extends unknown>(
+export function AutoResponseFull<T>(
   ...params: ConstructorParameters<typeof HttpResponse<T>>
 ): MethodDecorator {
   const resultDecorator: MethodDecorator = (

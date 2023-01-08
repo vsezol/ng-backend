@@ -1,3 +1,4 @@
+import { VOID } from 'utilities';
 import { HttpMethodName } from '../../declarations/enums/http-method-name.enum';
 import { HttpMethodDecoratorBuilder } from '../../declarations/types/http-method-decorator-builder.type';
 import { UriPartsListBuilder } from '../../declarations/types/uri-parts-list-builder.type';
@@ -47,5 +48,5 @@ function createProxyForKey(
 }
 
 function createTarget(): HttpMethodDecoratorBuilder {
-  return <HttpMethodDecoratorBuilder>(() => {});
+  return <HttpMethodDecoratorBuilder>(() => VOID);
 }

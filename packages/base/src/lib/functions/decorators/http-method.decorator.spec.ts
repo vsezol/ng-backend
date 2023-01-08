@@ -21,15 +21,16 @@ jest.mock('../common/create-method-guard.function', () => ({
   createMethodGuard: mockCreateMethodGuard,
 }));
 
-import { DynamicUriPart } from 'packages/ng-backend/src/internal/declarations/classes/dynamic-uri-part.class';
-import { UriPart } from 'packages/ng-backend/src/internal/declarations/classes/uri-part.class';
-import { RegExpPart } from 'packages/ng-backend/src/internal/declarations/enums/regexp-part.enum';
-import { HttpMethodName } from '../../../internal/declarations/enums/http-method-name.enum';
-import { MethodHandlerConfig } from '../../../internal/declarations/interfaces/method-handler-config.interface';
+import { DynamicUriPart } from '../../declarations/classes/dynamic-uri-part.class';
+import { UriPart } from '../../declarations/classes/uri-part.class';
+import { HttpMethodName } from '../../declarations/enums/http-method-name.enum';
+import { RegExpPart } from '../../declarations/enums/regexp-part.enum';
+import { MethodHandlerConfig } from '../../declarations/interfaces/method-handler-config.interface';
 import { HttpMethod } from './http-method.decorator';
 
 describe('http-method.decorator', () => {
   it('should call RequestHandlersBuilder.getRequestHandlers for each @HttpMethod', () => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     class Fake {
       @HttpMethod(HttpMethodName.GET)
       public firstFakeFn() {}
@@ -44,6 +45,7 @@ describe('http-method.decorator', () => {
   });
 
   it('should call RequestHandlers.registerHandler for each @HttpMethod', () => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     class Fake {
       @HttpMethod(HttpMethodName.GET)
       public firstFakeFn() {}
@@ -58,6 +60,8 @@ describe('http-method.decorator', () => {
   it('should call createMethodGuard for each @HttpMethod', () => {
     const firstUri = 'hello/world';
     const secondUri = 'have/a/nice/day';
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     class Fake {
       @HttpMethod(HttpMethodName.DELETE, firstUri)
       public firstFakeFn() {}
@@ -96,6 +100,7 @@ describe('http-method.decorator', () => {
   });
 
   it('should work with regexp', () => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     class Fake {
       @HttpMethod(HttpMethodName.GET, /url\/by\/regexp/)
       public fakeFn() {}
@@ -108,6 +113,7 @@ describe('http-method.decorator', () => {
   });
 
   it('should work with UriPart array', () => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     class Fake {
       @HttpMethod(HttpMethodName.GET, [
         new UriPart('old'),

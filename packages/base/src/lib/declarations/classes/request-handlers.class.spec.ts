@@ -1,4 +1,5 @@
 import { HttpRequest } from '@angular/common/http';
+import { VOID } from 'utilities';
 import { HttpMethodName } from '../enums/http-method-name.enum';
 import { MethodHandlerConfig } from '../interfaces/method-handler-config.interface';
 import { RequestHandlers } from './request-handlers.class';
@@ -39,7 +40,7 @@ describe('request-handlers.class', () => {
         forMethod: HttpMethodName.GET,
         key: 'fakeKey',
         canActivate: () => true,
-        run: () => {},
+        run: () => VOID,
         routeRegExpPart: '',
         paramNames: [],
       };
@@ -126,7 +127,7 @@ describe('request-handlers.class', () => {
         canActivate: () => true,
         forMethod: HttpMethodName.DELETE,
         key: 'handler1',
-        run: () => {},
+        run: () => VOID,
         routeRegExpPart: '',
         paramNames: [],
       };
@@ -134,7 +135,7 @@ describe('request-handlers.class', () => {
         canActivate: () => true,
         forMethod: HttpMethodName.DELETE,
         key: 'handler2',
-        run: () => {},
+        run: () => VOID,
         routeRegExpPart: '',
         paramNames: [],
       };

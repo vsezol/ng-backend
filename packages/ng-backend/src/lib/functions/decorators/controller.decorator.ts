@@ -9,7 +9,8 @@ import {
   MethodHandlerInput,
   RequestHandlersBuilder,
   runMethodHandler,
-} from 'ng-backend/internal';
+} from 'base';
+
 import { Observable } from 'rxjs';
 import {
   extractRegExpVariables,
@@ -19,7 +20,7 @@ import {
 
 export const Controller =
   (baseUrl: string): ClassDecorator =>
-  <T extends Function>(classConstructorReference: T): T => {
+  <T extends NewableFunction>(classConstructorReference: T): T => {
     if (!isClassConstructor(classConstructorReference)) {
       throw new Error(`Unexpected decoration target is detected.`);
     }

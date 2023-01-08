@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 const mockAutoResponseFull = jest.fn();
 const mockAutoResponseBody = jest.fn();
 
@@ -45,7 +46,7 @@ describe('auto-response.proxy', () => {
   it('should throw error on get not existing key', () => {
     let thrown: unknown;
     try {
-      // @ts-expect-error
+      // @ts-expect-error this key does not exist
       AutoResponse.FAKE_KEY;
     } catch (item: unknown) {
       thrown = item;

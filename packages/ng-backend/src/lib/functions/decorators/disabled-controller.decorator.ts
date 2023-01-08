@@ -1,7 +1,7 @@
-import { RequestHandlersBuilder } from 'ng-backend/internal';
+import { RequestHandlersBuilder } from 'base';
 import { isClassConstructor } from 'utilities';
 
-export const DisabledController: ClassDecorator = <T extends Function>(
+export const DisabledController: ClassDecorator = <T extends NewableFunction>(
   classConstructorReference: T
 ): T => {
   if (!isClassConstructor(classConstructorReference)) {
