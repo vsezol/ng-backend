@@ -25,7 +25,7 @@
     "test": {
       "executor": "@nrwl/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
-      "dependsOn": ["barrel"],
+      "dependsOn": ["barrel", "^test"],
       "options": {
         "jestConfig": "packages/base/jest.config.ts",
         "passWithNoTests": true

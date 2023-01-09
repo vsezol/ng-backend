@@ -70,3 +70,29 @@ jobs:
 
       - name: 'Test affected projects'
         run: npm run test
+
+  docs:
+    needs: build
+    name: Docs
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Check out source code
+        uses: actions/checkout@v3
+        with:
+          # Required by nrwl/nx-set-shas
+          fetch-depth: 0
+      - name: 'Derive appropriate SHAs for base and head for `nx affected` commands'
+        uses: nrwl/nx-set-shas@v2
+      - name: Set up dependencies
+        uses: ./.github/actions/setup-dependencies
+      - name: Building documentation
+        run: npm run docs
+      - name: Deploying to github pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: docs
+          token: ${{ secrets.TOKEN }}
