@@ -24,7 +24,7 @@
     "test": {
       "executor": "@nrwl/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
-      "dependsOn": ["barrel"],
+      "dependsOn": ["barrel", "^test"],
       "options": {
         "jestConfig": "packages/ng-backend/jest.config.ts",
         "passWithNoTests": true
@@ -37,8 +37,9 @@
         "command": "barrelsby --config ./barrelsby.json --directory ./src/lib"
       }
     },
-    "typedoc": {
+    "docs": {
       "executor": "nx:run-commands",
+      "dependsOn": ["build", "^docs"],
       "options": {
         "cwd": "./packages/ng-backend",
         "command": "typedoc"
