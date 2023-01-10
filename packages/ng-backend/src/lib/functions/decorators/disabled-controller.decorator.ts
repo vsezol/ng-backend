@@ -1,6 +1,19 @@
 import { RequestHandlersBuilder } from 'base';
 import { isClassConstructor } from 'utilities';
 
+/**
+ * Decorator that disables interceptor functionality added by {@link Controller}
+ *
+ * @group Decorators
+ *
+ * @example
+ * Simple use
+ * ```ts
+ * @Controller('todos')
+ * @DisabledController
+ * class TodoController {}
+ * ```
+ */
 export const DisabledController: ClassDecorator = <T extends NewableFunction>(
   classConstructorReference: T
 ): T => {

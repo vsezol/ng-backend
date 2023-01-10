@@ -1,4 +1,11 @@
-export { MethodHandlerInput, MethodHandlerResult } from 'base';
+export {
+  HttpMethodDecoratorBuilder,
+  MethodHandlerBasicResult,
+  MethodHandlerInput,
+  MethodHandlerInputOptions,
+  MethodHandlerInputPatcher,
+  MethodHandlerResult,
+} from 'base';
 export { Disabled } from './lib/declarations/classes/presets/disabled.class';
 export { AutoResponse } from './lib/declarations/proxies/auto-response.proxy';
 export { AutoResponseBody } from './lib/functions/decorators/auto-response-body.decorator';

@@ -1,10 +1,15 @@
 {
-  "entryPoints": ["src/index.ts"],
-  "readme": "README.md",
+  "entryPoints": ["src/public-api.ts"],
+  "readme": "none",
   "name": "NgBackend",
   "tsconfig": "tsconfig.lib.json",
+  "githubPages": true,
   "excludePrivate": true,
   "excludeExternals": true,
   "hideGenerator": true,
-  "out": "../../docs"
+  "includeVersion": true,
+  "out": "../../docs",
+  "navigationLinks": {
+    "Github": "https://github.com/vsezol/ng-backend"
+  }
 }

@@ -2,7 +2,9 @@ export { MethodHandlerInput } from './lib/declarations/classes/method-handler-in
 export { RequestHandlersBuilder } from './lib/declarations/classes/request-handlers-builder.class';
 export { HttpMethodName } from './lib/declarations/enums/http-method-name.enum';
 export { MethodHandlerConfig } from './lib/declarations/interfaces/method-handler-config.interface';
+export { MethodHandlerInputOptions } from './lib/declarations/interfaces/method-handler-input-options.interface';
 export { HttpMethodDecoratorBuilder } from './lib/declarations/types/http-method-decorator-builder.type';
+export { MethodHandlerBasicResult } from './lib/declarations/types/method-handler-basic-result.type';
 export { MethodHandlerInputPatcher } from './lib/declarations/types/method-handler-input-patcher.type';
 export { MethodHandlerResult } from './lib/declarations/types/method-handler-result.type';
 export { MethodHandler } from './lib/declarations/types/method-handler.type';

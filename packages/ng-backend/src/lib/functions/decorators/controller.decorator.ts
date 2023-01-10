@@ -18,6 +18,37 @@ import {
   mergeArraysIntoEntries,
 } from 'utilities';
 
+/**
+ * Decorator that adds interceptor functionality to a target class.
+ *
+ * @param baseUrl base url for filtering input requests
+ * @returns ClassDecorator
+ *
+ * @group Decorators
+ *
+ * @example
+ * Simple use
+ * ```ts
+ * @Controller('todos')
+ * class TodoController {}
+ * ```
+ *
+ * @example
+ * With method decorators
+ * ```ts
+ * @Controller('todos')
+ * class TodoController {
+ *  // filters requests with 'todos' in url and GET method
+ *  @Get()
+ *  @Header('hello', 'world')
+ *  public get(): void {}
+ *
+ *  // filters requests with 'todos/all' in url and DELETE method
+ *  @Delete('all')
+ *  public deleteAll(): void {}
+ * }
+ * ```
+ */
 export const Controller =
   (baseUrl: string): ClassDecorator =>
   <T extends NewableFunction>(classConstructorReference: T): T => {
