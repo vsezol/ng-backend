@@ -25,13 +25,20 @@ jobs:
         with:
           # Required by nrwl/nx-set-shas
           fetch-depth: 0
+
       - name: 'Derive appropriate SHAs for base and head for `nx affected` commands'
         uses: nrwl/nx-set-shas@v2
+
       - name: Set up dependencies
         uses: ./.github/actions/setup-dependencies
 
-      - name: 'Build application if affected by changes in feature branch'
+      - name: 'PR: Build application if affected by changes in feature branch'
+        if: env.is-pull-request == 'true'
         run: npm run affected:build
+
+      - name: 'Merge: Build application'
+        if: env.is-merge == 'true'
+        run: npm run build
 
   lint:
     name: Lint
@@ -43,15 +50,23 @@ jobs:
         with:
           # Required by nrwl/nx-set-shas
           fetch-depth: 0
+
       - name: 'Derive appropriate SHAs for base and head for `nx affected` commands'
         uses: nrwl/nx-set-shas@v2
+
       - name: Set up dependencies
         uses: ./.github/actions/setup-dependencies
 
       - name: Lint Nx workspace
         run: npx nx workspace-lint
-      - name: 'Lint workspace and affected projects'
+
+      - name: 'PR: Lint workspace and affected projects'
+        if: env.is-pull-request == 'true'
         run: npm run affected:lint
+
+      - name: 'Merge: Lint workspace and all projects'
+        if: env.is-merge == 'true'
+        run: npm run lint
 
   test:
     name: Test
@@ -63,17 +78,25 @@ jobs:
         with:
           # Required by nrwl/nx-set-shas
           fetch-depth: 0
+
       - name: 'Derive appropriate SHAs for base and head for `nx affected` commands'
         uses: nrwl/nx-set-shas@v2
+
       - name: Set up dependencies
         uses: ./.github/actions/setup-dependencies
 
-      - name: 'Test affected projects'
+      - name: 'PR: Test affected projects'
+        if: env.is-pull-request == 'true'
+        run: npm run affected:test
+
+      - name: 'Merge: Test all projects'
+        if: env.is-merge == 'true'
         run: npm run test
 
   docs:
     name: Docs
     runs-on: ubuntu-latest
+    if: ${{github.ref_name == 'main'}}
 
     permissions:
       contents: write
@@ -84,12 +107,16 @@ jobs:
         with:
           # Required by nrwl/nx-set-shas
           fetch-depth: 0
+
       - name: 'Derive appropriate SHAs for base and head for `nx affected` commands'
         uses: nrwl/nx-set-shas@v2
+
       - name: Set up dependencies
         uses: ./.github/actions/setup-dependencies
+
       - name: Building documentation
         run: npm run docs
+
       - name: Deploying to github pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
