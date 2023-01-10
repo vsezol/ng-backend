@@ -1,11 +1,39 @@
 import { HttpRequest } from '@angular/common/http';
 import { isNil } from 'utilities';
+import { MethodHandlerInputOptions } from '../interfaces/method-handler-input-options.interface';
 
-interface Options<T> {
-  request: HttpRequest<T>;
-  dynamicParamsMap?: Map<string, string>;
-}
-
+/**
+ * Class that passes to each method handler as first argument
+ *
+ * @group Classes
+ *
+ * @example
+ * Work with dynamic params map
+ * ```ts
+ * @Controller('todos')
+ * class TodoController {
+ *  @Get.id('int').authorId('int')()
+ *  public getById({dynamicParamsMap}: MethodHandlerInput): void {
+ *    const id: string = dynamicParamsMap.get('id');
+ *    const authorId: string = dynamicParamsMap.get('authorId');
+ *
+ *    console.log(id, authorId); // 777 999 for request url 'todos/777/999'
+ *  }
+ * }
+ * ```
+ *
+ * @example
+ * Echo request url in body
+ * ```ts
+ * @Controller('todos')
+ * class TodoController {
+ *  @Get()
+ *  public get({request}: MethodHandlerInput): MethodHandlerResult {
+ *    return request.url;
+ *  }
+ * }
+ * ```
+ */
 export class MethodHandlerInput<T = unknown> {
   public readonly request: HttpRequest<T>;
   public readonly dynamicParamsMap: Map<string, string> = new Map<
@@ -13,14 +41,25 @@ export class MethodHandlerInput<T = unknown> {
     string
   >();
 
-  constructor(options: Options<T>) {
+  /**
+   * MethodHandlerInput constructor
+   * @param options
+   */
+  constructor(options: MethodHandlerInputOptions<T>) {
     this.request = options.request;
     if (!isNil(options.dynamicParamsMap)) {
       this.dynamicParamsMap = options.dynamicParamsMap;
     }
   }
 
-  public clone(options: Partial<Options<T>>): MethodHandlerInput<T> {
+  /**
+   * Clones itself with optional options
+   * @param options
+   * @returns MethodHandlerInput<T>
+   */
+  public clone(
+    options: Partial<MethodHandlerInputOptions<T>>
+  ): MethodHandlerInput<T> {
     return new MethodHandlerInput({
       request: options.request ?? this.request.clone(),
       dynamicParamsMap:
