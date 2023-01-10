@@ -11,5 +11,5 @@ runs:
         cache: npm
         node-version-file: .nvmrc
     - name: Install dependencies
-      run: npm ci && npm run barrel:force
+      run: npm ci
       shell: bash

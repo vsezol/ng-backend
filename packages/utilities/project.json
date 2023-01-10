@@ -7,7 +7,7 @@
     "build": {
       "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
-      "dependsOn": ["barrel", "^build"],
+      "dependsOn": ["^build"],
       "options": {
         "outputPath": "dist/packages/utilities",
         "main": "packages/utilities/src/index.ts",
@@ -25,17 +25,9 @@
     "test": {
       "executor": "@nrwl/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
-      "dependsOn": ["barrel", "^test"],
       "options": {
         "jestConfig": "packages/utilities/jest.config.ts",
         "passWithNoTests": true
-      }
-    },
-    "barrel": {
-      "executor": "nx:run-commands",
-      "options": {
-        "cwd": "./packages/utilities",
-        "command": "barrelsby --config ./barrelsby.json --directory ./src/lib"
       }
     }
   },

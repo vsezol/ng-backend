@@ -7,7 +7,7 @@
     "build": {
       "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
-      "dependsOn": ["barrel", "^build"],
+      "dependsOn": ["^build"],
       "options": {
         "outputPath": "dist/packages/ng-backend",
         "main": "packages/ng-backend/src/index.ts",
@@ -24,22 +24,13 @@
     "test": {
       "executor": "@nrwl/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
-      "dependsOn": ["barrel", "^test"],
       "options": {
         "jestConfig": "packages/ng-backend/jest.config.ts",
         "passWithNoTests": true
       }
     },
-    "barrel": {
-      "executor": "nx:run-commands",
-      "options": {
-        "cwd": "./packages/ng-backend",
-        "command": "barrelsby --config ./barrelsby.json --directory ./src/lib"
-      }
-    },
     "docs": {
       "executor": "nx:run-commands",
-      "dependsOn": ["build", "^docs"],
       "options": {
         "cwd": "./packages/ng-backend",
         "command": "typedoc"
