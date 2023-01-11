@@ -26,10 +26,10 @@ import {
  * ```ts
  * @Controller('todos')
  * class TodoController {
- *  @Delete(/(.*)/)
+ *  @Get(/(.*)/)
  *  public getById(): void {}
  *
- *  @Delete('all')
+ *  @Get('all')
  *  public getAll(): void {}
  * }
  * ```

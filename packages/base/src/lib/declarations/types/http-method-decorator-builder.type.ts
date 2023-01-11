@@ -19,17 +19,10 @@ type HttpMethodDecoratorBuilderBase = {
  * @returns MethodDecorator
  *
  * @example
- * Simple-style
  * ```ts
  * const builder: HttpMethodDecoratorBuilder = callSomethingThatImplementsIt();
- * builder('users/all');
- * ```
- *
- * @example
- * Builder-style
- * ```ts
- * const builder: HttpMethodDecoratorBuilder = callSomethingThatImplementsIt();
- * builder.users.all();
+ * builder('users/all'); // simple-style
+ * builder.users.all(); // builder-style
  * ```
  *
  * Builder style supports typed params
@@ -38,9 +31,9 @@ type HttpMethodDecoratorBuilderBase = {
  * Builder with typed params
  * ```ts
  * const builder: HttpMethodDecoratorBuilder = callSomethingThatImplementsIt();
- * builder.users.id('int').friend.friendId('float').photos.photoName('any').token('uuid')();
+ * builder.users.id('int').friends.friendId('float')();
  * ```
- * Notice: In other libraries in could be '/users/:id/friend/:friendId/photos/:photoName/:token' \
+ * Notice: In other libraries in could be '/users/:id/friends/:friendId' \
  * but these libraries do not support dynamic param types as: int, float, uuid or any
  */
 export type HttpMethodDecoratorBuilder = HttpMethodDecoratorBuilderBase &
