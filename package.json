@@ -10,7 +10,8 @@
     "affected:lint": "nx affected:lint --max-warnings=0",
     "affected:build": "nx affected:build --configuration=production",
     "affected:test": "nx affected:test",
-    "affected:ci": "npm run affected:build && npm run affected:lint && npm run affected:test"
+    "affected:ci": "npm run affected:build && npm run affected:lint && npm run affected:test",
+    "publish:ng-backend": "nx publish ng-backend --token $TOKEN"
   },
   "private": true,
   "devDependencies": {
