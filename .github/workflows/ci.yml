@@ -105,11 +105,7 @@ jobs:
       - name: Check out source code
         uses: actions/checkout@v3
         with:
-          # Required by nrwl/nx-set-shas
           fetch-depth: 0
-
-      - name: 'Derive appropriate SHAs for base and head for `nx affected` commands'
-        uses: nrwl/nx-set-shas@v2
 
       - name: Set up dependencies
         uses: ./.github/actions/setup-dependencies
@@ -122,3 +118,20 @@ jobs:
         with:
           folder: docs
           token: ${{ secrets.TOKEN }}
+
+  publish:
+    name: Publish
+    runs-on: ubuntu-latest
+    # if: ${{github.ref_name == 'main'}}
+
+    steps:
+      - name: Check out source code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Set up dependencies
+        uses: ./.github/actions/setup-dependencies
+
+      - name: Publish ng-backend
+        run: TOKEN=${{secrets.NPM_TOKEN}} npm run publish:ng-backend
