@@ -29,6 +29,29 @@ You can find the NgBackend documentation on the [website](https://vsezol.github.
 
 ## Examples
 
+### Provide Controller
+
+It provides like http interceptor
+
+```typescript
+@Controller('todos')
+class TodosController {
+  //...
+}
+
+@NgModule({
+  //...
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TodosController,
+      multi: true,
+    },
+  ],
+})
+export class AppModule {}
+```
+
 ### Get input request
 
 ```typescript
