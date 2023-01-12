@@ -1,0 +1,26 @@
+name: CI
+
+on:
+  workflow_dispatch:
+
+env:
+  # Node.js
+  NODE_OPTIONS: --max-old-space-size=6144
+
+jobs:
+  publish:
+    name: Publish
+    runs-on: ubuntu-latest
+    if: ${{github.ref_name == 'main'}}
+
+    steps:
+      - name: Check out source code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Set up dependencies
+        uses: ./.github/actions/setup-dependencies
+
+      - name: Publish ng-backend
+        run: TOKEN=${{secrets.NPM_TOKEN}} npm run publish:ng-backend
