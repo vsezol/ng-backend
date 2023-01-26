@@ -1,4 +1,4 @@
-import { VOID } from 'utilities';
+import { VOID } from '@ng-backend/utilities';
 import { DynamicUriPart } from '../../declarations/classes/dynamic-uri-part.class';
 import { UriPart } from '../../declarations/classes/uri-part.class';
 import { UriPartsListBuilder } from '../../declarations/types/uri-parts-list-builder.type';

@@ -1,5 +1,14 @@
 {
-  "name": "utilities",
+  "name": "@ng-backend/utilities",
   "version": "1.0.0",
-  "type": "commonjs"
+  "type": "commonjs",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vsezol/ng-backend",
+    "directory": "packages/base"
+  },
+  "author": "vsezol"
 }

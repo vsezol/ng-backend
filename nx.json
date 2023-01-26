@@ -30,7 +30,7 @@
       "style": "scss"
     }
   },
-  "defaultProject": "ng-backend",
+  "defaultProject": "demo",
   "pluginsConfig": {
     "@nrwl/js": {
       "analyzeSourceFiles": true

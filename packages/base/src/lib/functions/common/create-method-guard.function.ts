@@ -1,4 +1,4 @@
-import { concatUriRegExpParts } from 'utilities';
+import { concatUriRegExpParts } from '@ng-backend/utilities';
 import { MethodGuard } from '../../declarations/types/method-guard.type';
 
 export const createMethodGuard =

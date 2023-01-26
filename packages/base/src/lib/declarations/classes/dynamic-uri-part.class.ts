@@ -1,4 +1,4 @@
-import { isNil } from 'utilities';
+import { isNil } from '@ng-backend/utilities';
 import { REG_EXP_PART_BY_URL_PARAM_TYPE } from '../constants/reg-exp-part-by-url-param-type.const';
 import { UrlParamType } from '../types/url-param-type.type';
 import { UriPart } from './uri-part.class';

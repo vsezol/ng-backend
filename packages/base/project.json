@@ -15,6 +15,14 @@
         "assets": ["packages/base/*.md"]
       }
     },
+    "publish": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "dist/packages/base",
+        "commands": ["NPM_TOKEN={args.token} npm publish"]
+      },
+      "dependsOn": ["build"]
+    },
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
