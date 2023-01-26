@@ -5,9 +5,8 @@
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/js:tsc",
+      "executor": "@nrwl/esbuild:esbuild",
       "outputs": ["{options.outputPath}"],
-      "dependsOn": ["^build"],
       "options": {
         "outputPath": "dist/packages/utilities",
         "main": "packages/utilities/src/index.ts",
