@@ -1,4 +1,4 @@
-import { concatUriRegExpParts } from 'utilities';
+import { concatUriRegExpParts } from '@ng-backend/utilities';
 import { DynamicUriPart } from '../../declarations/classes/dynamic-uri-part.class';
 import { RequestHandlersBuilder } from '../../declarations/classes/request-handlers-builder.class';
 import { UriPart } from '../../declarations/classes/uri-part.class';

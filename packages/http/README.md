@@ -13,12 +13,12 @@ NgBackend is available as a package for use with an [Angular](https://angular.io
 
 ```bash
 # npm
-npm install @ng-backend/http
+npm install ng-backend
 ```
 
 ```bash
 # yarn
-yarn add @ng-backend/http
+yarn add ng-backend
 ```
 
 TypeScript type definitions are included in the library and do not need to be installed additionally.

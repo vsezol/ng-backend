@@ -4,7 +4,7 @@ import {
   Get,
   Header,
   MethodHandlerInput,
-} from 'ng-backend';
+} from '@ng-backend/http';
 
 @Controller('todos')
 export class TodosController {
