@@ -1,5 +1,5 @@
 import { HttpEventType } from '@angular/common/http';
-import { isEnumValue } from 'utilities';
+import { isEnumValue } from '@ng-backend/utilities';
 import { isHttpEvent } from './is-http-event.function';
 
 describe('is-http-event.function', () => {

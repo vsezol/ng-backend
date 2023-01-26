@@ -1,5 +1,5 @@
 {
-  "name": "vsezol",
+  "name": "ng-backend",
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
@@ -11,7 +11,9 @@
     "affected:build": "nx affected:build --configuration=production",
     "affected:test": "nx affected:test",
     "affected:ci": "npm run affected:build && npm run affected:lint && npm run affected:test",
-    "publish:ng-backend": "nx publish ng-backend --token $TOKEN"
+    "publish:utilities": "nx publish utilities --token $TOKEN",
+    "publish:base": "nx publish base --token $TOKEN",
+    "publish:http": "nx publish http --token $TOKEN"
   },
   "private": true,
   "devDependencies": {

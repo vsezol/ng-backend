@@ -1,7 +1,7 @@
 {
-  "name": "utilities",
+  "name": "http",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "packages/utilities/src",
+  "sourceRoot": "packages/http/src",
   "projectType": "library",
   "targets": {
     "build": {
@@ -9,16 +9,16 @@
       "outputs": ["{options.outputPath}"],
       "dependsOn": ["^build"],
       "options": {
-        "outputPath": "dist/packages/utilities",
-        "main": "packages/utilities/src/index.ts",
-        "tsConfig": "packages/utilities/tsconfig.lib.json",
-        "assets": ["packages/utilities/*.md"]
+        "outputPath": "dist/packages/http",
+        "main": "packages/http/src/index.ts",
+        "tsConfig": "packages/http/tsconfig.lib.json",
+        "assets": ["packages/http/*.md", "packages/http/.npmrc"]
       }
     },
     "publish": {
       "executor": "nx:run-commands",
       "options": {
-        "cwd": "dist/packages/utilities",
+        "cwd": "dist/packages/http",
         "commands": ["NPM_TOKEN={args.token} npm publish"]
       },
       "dependsOn": ["build"]
@@ -27,17 +27,32 @@
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["packages/utilities/**/*.ts"]
+        "lintFilePatterns": ["packages/http/**/*.ts"]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "packages/utilities/jest.config.ts",
+        "jestConfig": "packages/http/jest.config.ts",
         "passWithNoTests": true
+      }
+    },
+    "docs": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "./packages/http",
+        "command": "typedoc"
       }
     }
   },
-  "tags": []
+  "tags": [
+    "ng-backend",
+    "interceptors",
+    "angular",
+    "typescript",
+    "decorators",
+    "mocks",
+    "http"
+  ]
 }

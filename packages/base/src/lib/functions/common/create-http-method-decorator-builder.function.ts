@@ -1,4 +1,4 @@
-import { VOID } from 'utilities';
+import { VOID } from '@ng-backend/utilities';
 import { HttpMethodName } from '../../declarations/enums/http-method-name.enum';
 import { HttpMethodDecoratorBuilder } from '../../declarations/types/http-method-decorator-builder.type';
 import { UriPartsListBuilder } from '../../declarations/types/uri-parts-list-builder.type';

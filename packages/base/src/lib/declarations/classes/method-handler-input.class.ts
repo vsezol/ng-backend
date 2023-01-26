@@ -1,5 +1,5 @@
 import { HttpRequest } from '@angular/common/http';
-import { isNil } from 'utilities';
+import { isNil } from '@ng-backend/utilities';
 import { MethodHandlerInputOptions } from '../interfaces/method-handler-input-options.interface';
 
 /**

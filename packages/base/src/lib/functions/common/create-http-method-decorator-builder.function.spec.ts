@@ -6,7 +6,7 @@ jest.mock('../decorators/http-method.decorator', () => {
   };
 });
 
-import { VOID } from 'utilities';
+import { VOID } from '@ng-backend/utilities';
 import { DynamicUriPart } from '../../declarations/classes/dynamic-uri-part.class';
 import { UriPart } from '../../declarations/classes/uri-part.class';
 import { HttpMethodName } from '../../declarations/enums/http-method-name.enum';

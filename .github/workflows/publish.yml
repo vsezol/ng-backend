@@ -22,5 +22,11 @@ jobs:
       - name: Set up dependencies
         uses: ./.github/actions/setup-dependencies
 
-      - name: Publish ng-backend
-        run: TOKEN=${{secrets.NPM_TOKEN}} npm run publish:ng-backend
+      - name: Publish @ng-backend/utilities
+        run: TOKEN=${{secrets.NPM_TOKEN}} npm run publish:utilities
+
+      - name: Publish @ng-backend/base
+        run: TOKEN=${{secrets.NPM_TOKEN}} npm run publish:base
+
+      - name: Publish @ng-backend/http
+        run: TOKEN=${{secrets.NPM_TOKEN}} npm run publish:http
