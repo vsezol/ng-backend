@@ -17,8 +17,7 @@
     "paths": {
       "base": ["packages/base/src/index.ts"],
       "ng-backend": ["packages/ng-backend/src/index.ts"],
-      "utilities": ["packages/utilities/src/index.ts"],
-      "utilities2": ["packages/utilities2/src/index.ts"]
+      "utilities": ["packages/utilities/src/index.ts"]
     },
     "noPropertyAccessFromIndexSignature": false
   },
