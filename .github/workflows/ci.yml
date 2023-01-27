@@ -1,11 +1,9 @@
 name: CI
 
 env:
-  # Branching
   is-merge: ${{ github.event_name == 'push' && github.ref_name == 'main' }}
   is-pull-request: ${{ github.event_name == 'pull_request' }}
 
-  # Node.js
   NODE_OPTIONS: --max-old-space-size=6144
 
 on:
@@ -15,22 +13,41 @@ on:
   pull_request: {}
 
 jobs:
-  build:
-    name: Build
+  setup:
+    name: Set up
     runs-on: ubuntu-latest
 
     steps:
       - name: Check out source code
         uses: actions/checkout@v3
         with:
-          # Required by nrwl/nx-set-shas
           fetch-depth: 0
 
-      - name: 'Derive appropriate SHAs for base and head for `nx affected` commands'
-        uses: nrwl/nx-set-shas@v2
+      - name: Set up node
+        uses: ./.github/actions/setup-node
 
-      - name: Set up dependencies
-        uses: ./.github/actions/setup-dependencies
+      - name: Install dependencies
+        uses: ./.github/actions/install-dependencies
+
+      - name: Set up workspace cache
+        uses: ./.github/actions/with-cached-workspace
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    needs: setup
+
+    steps:
+      - name: Check out source code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Download workspace cache
+        uses: ./.github/actions/with-cached-workspace
+
+      - name: Derive appropriate SHAs for base and head for 'nx affected' commands
+        uses: nrwl/nx-set-shas@v2
 
       - name: 'PR: Build application if affected by changes in feature branch'
         if: env.is-pull-request == 'true'
@@ -43,19 +60,19 @@ jobs:
   lint:
     name: Lint
     runs-on: ubuntu-latest
+    needs: setup
 
     steps:
       - name: Check out source code
         uses: actions/checkout@v3
         with:
-          # Required by nrwl/nx-set-shas
           fetch-depth: 0
 
-      - name: 'Derive appropriate SHAs for base and head for `nx affected` commands'
-        uses: nrwl/nx-set-shas@v2
+      - name: Download workspace cache
+        uses: ./.github/actions/with-cached-workspace
 
-      - name: Set up dependencies
-        uses: ./.github/actions/setup-dependencies
+      - name: Derive appropriate SHAs for base and head for 'nx affected' commands
+        uses: nrwl/nx-set-shas@v2
 
       - name: Lint Nx workspace
         run: npx nx workspace-lint
@@ -71,19 +88,19 @@ jobs:
   test:
     name: Test
     runs-on: ubuntu-latest
+    needs: setup
 
     steps:
       - name: Check out source code
         uses: actions/checkout@v3
         with:
-          # Required by nrwl/nx-set-shas
           fetch-depth: 0
 
-      - name: 'Derive appropriate SHAs for base and head for `nx affected` commands'
-        uses: nrwl/nx-set-shas@v2
+      - name: Download workspace cache
+        uses: ./.github/actions/with-cached-workspace
 
-      - name: Set up dependencies
-        uses: ./.github/actions/setup-dependencies
+      - name: Derive appropriate SHAs for base and head for 'nx affected' commands
+        uses: nrwl/nx-set-shas@v2
 
       - name: 'PR: Test affected projects'
         if: env.is-pull-request == 'true'
@@ -92,29 +109,3 @@ jobs:
       - name: 'Merge: Test all projects'
         if: env.is-merge == 'true'
         run: npm run test
-
-  docs:
-    name: Docs
-    runs-on: ubuntu-latest
-    if: ${{github.ref_name == 'main'}}
-
-    permissions:
-      contents: write
-
-    steps:
-      - name: Check out source code
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-
-      - name: Set up dependencies
-        uses: ./.github/actions/setup-dependencies
-
-      - name: Building documentation
-        run: npm run docs
-
-      - name: Deploying to github pages
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          folder: docs
-          token: ${{ secrets.TOKEN }}
