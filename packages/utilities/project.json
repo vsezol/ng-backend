@@ -12,14 +12,14 @@
         "outputPath": "dist/packages/utilities",
         "main": "packages/utilities/src/index.ts",
         "tsConfig": "packages/utilities/tsconfig.lib.json",
-        "assets": ["packages/utilities/*.md"]
+        "assets": ["packages/utilities/*.md", "packages/utilities/.npmrc"]
       }
     },
     "publish": {
       "executor": "nx:run-commands",
       "options": {
         "cwd": "dist/packages/utilities",
-        "commands": ["NPM_TOKEN={args.token} npm publish"]
+        "commands": ["npm publish"]
       },
       "dependsOn": ["build"]
     },
