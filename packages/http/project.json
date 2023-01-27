@@ -19,7 +19,7 @@
       "executor": "nx:run-commands",
       "options": {
         "cwd": "dist/packages/http",
-        "commands": ["NPM_TOKEN={args.token} npm publish"]
+        "commands": ["npm publish"]
       },
       "dependsOn": ["build"]
     },
