@@ -1,4 +1,4 @@
-name: Publish
+name: Docs
 
 on:
   push:
@@ -6,9 +6,7 @@ on:
       - main
 
 env:
-  # Node.js
   NODE_OPTIONS: --max-old-space-size=6144
-  NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
 jobs:
   setup:
@@ -30,10 +28,13 @@ jobs:
       - name: Set up workspace cache
         uses: ./.github/actions/with-cached-workspace
 
-  publish:
-    name: Publish
+  docs:
+    name: Docs
     runs-on: ubuntu-latest
     needs: setup
+
+    permissions:
+      contents: write
 
     steps:
       - name: Check out source code
@@ -44,5 +45,11 @@ jobs:
       - name: Download workspace cache
         uses: ./.github/actions/with-cached-workspace
 
-      - name: Publish packages
-        run: npm run publish
+      - name: Building documentation
+        run: npm run docs
+
+      - name: Deploying to github pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: docs
+          token: ${{ secrets.TOKEN }}

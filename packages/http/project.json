@@ -12,14 +12,14 @@
         "outputPath": "dist/packages/http",
         "main": "packages/http/src/index.ts",
         "tsConfig": "packages/http/tsconfig.lib.json",
-        "assets": ["packages/http/*.md", "packages/http/.npmrc"]
+        "assets": ["packages/http/*.md", ".npmrc"]
       }
     },
     "publish": {
       "executor": "nx:run-commands",
       "options": {
         "cwd": "dist/packages/http",
-        "commands": ["npm publish"]
+        "command": "npm publish"
       },
       "dependsOn": ["build"]
     },
