@@ -1,0 +1,9 @@
+name: Install package dependencies
+
+runs:
+  using: composite
+
+  steps:
+    - name: Install dependencies
+      run: npm ci
+      shell: bash

@@ -1,5 +1,5 @@
-name: Set up dependencies
-description: Set up Node.js and install package dependencies.
+name: Set up node
+description: Set up Node.js
 
 runs:
   using: composite
@@ -10,7 +10,3 @@ runs:
       with:
         cache: npm
         node-version-file: .nvmrc
-
-    - name: Install dependencies
-      run: npm ci
-      shell: bash

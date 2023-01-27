@@ -7,13 +7,11 @@
     "build": "nx run-many --target=build --all --parallel",
     "test": "nx run-many --target=test --all --parallel",
     "docs": "nx run-many --target=docs --all --parallel",
+    "publish": "nx run-many --target=publish --all --parallel",
     "affected:lint": "nx affected:lint --max-warnings=0",
     "affected:build": "nx affected:build --configuration=production",
     "affected:test": "nx affected:test",
-    "affected:ci": "npm run affected:build && npm run affected:lint && npm run affected:test",
-    "publish:utilities": "nx publish utilities --token $TOKEN",
-    "publish:base": "nx publish base --token $TOKEN",
-    "publish:http": "nx publish http --token $TOKEN"
+    "affected:ci": "npm run affected:build && npm run affected:lint && npm run affected:test"
   },
   "private": true,
   "devDependencies": {
