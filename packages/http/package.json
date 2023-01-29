@@ -1,6 +1,6 @@
 {
   "name": "@ng-backend/http",
-  "version": "0.0.2",
+  "version": "local",
   "type": "commonjs",
   "description": "The library that helps to write beautiful angular interceptors with decorators like controllers on backend",
   "publishConfig": {

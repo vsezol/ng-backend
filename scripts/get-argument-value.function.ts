@@ -4,7 +4,7 @@ import { hasArgument } from './has-argument.function';
 export function getArgumentValue<T extends string>(
   name: string
 ): T | undefined {
-  if (hasArgument(name)) {
+  if (!hasArgument(name)) {
     return undefined;
   }
 

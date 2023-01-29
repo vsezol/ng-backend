@@ -1,6 +1,6 @@
 {
   "name": "@ng-backend/base",
-  "version": "0.0.2",
+  "version": "local",
   "type": "commonjs",
   "publishConfig": {
     "access": "public"
